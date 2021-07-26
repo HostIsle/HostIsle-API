@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>aspnet-HostIsle.Web.Restaurants-C96B6061-5BE7-43A1-AC3A-C11AB54A8C7A</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.0-preview.5.21301.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0-preview.5.21301.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0-preview.5.21301.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0-preview.5.21301.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0-preview.5.21301.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0-preview.6.21362.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Chef\Controllers\" />
+    <Folder Include="Areas\Chef\Data\" />
+    <Folder Include="Areas\Chef\Models\" />
+    <Folder Include="Areas\Chef\Views\" />
+    <Folder Include="Areas\Waiter\Controllers\" />
+    <Folder Include="Areas\Waiter\Data\" />
+    <Folder Include="Areas\Waiter\Models\" />
+    <Folder Include="Areas\Waiter\Views\" />
+  </ItemGroup>
+
+</Project>

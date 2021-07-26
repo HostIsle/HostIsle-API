@@ -1,0 +1,198 @@
+﻿@using HostIsle.Data.Models.Hotels.Enums
+@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model HotelInformationViewModel
+@{
+    this.Layout = "_UsersLayout";
+    var cleanings = this.Model.Reservation.Room.Cleanings.Where(cleaning => cleaning.Date >= this.Model.Reservation.StartDate && cleaning.Date <= this.Model.Reservation.EndDate).ToList();
+}
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <h3>Резервация - стая @this.Model.Reservation.Room.RoomNumber </h3>
+        <p class="text-subtitle text-muted">Тук можете да редактирате или изтриете резервация.</p>
+    </div>
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Стая @this.Model.Reservation.Room.RoomNumber</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form asp-controller="Reservations" asp-action="Update" asp-route-id="@string.Concat(this.Model.Hotel.Id, " ", this.Model.Role, " ", this.Model.Reservation.Id)" class="form">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Първо име</label>
+                                            <input asp-for="EditReservationViewModel.FirstName" type="text" class="form-control" id="firstName" placeholder="@this.Model.Reservation.Guest.FirstName"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Фамилно име</label>
+                                            <input asp-for="EditReservationViewModel.LastName" type="text" class="form-control" id="lastName" placeholder="@this.Model.Reservation.Guest.LastName"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Имейл</label>
+                                            <input asp-for="EditReservationViewModel.Email" type="email" class="form-control" id="email" placeholder="@this.Model.Reservation.Guest.Email"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Стая</label>
+                                            <select asp-for="EditReservationViewModel.RoomNumber" id="roomType" class="form-control" disabled>
+                                                @foreach (var room in this.Model.Hotel.Rooms)
+                                                {
+                                                    <option value="@room.RoomNumber">@room.RoomNumber</option>
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>От</label>
+                                            <input asp-for="EditReservationViewModel.StartDate" type="date" class="form-control" id="startDate" placeholder="12.01.2021"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>До</label>
+                                            <input asp-for="EditReservationViewModel.EndDate" type="date" class="form-control" id="endDate" placeholder="4.01.2021"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Възрастни</label>
+                                            <input asp-for="EditReservationViewModel.Adults" type="number" class="form-control" id="adults" placeholder="@this.Model.Reservation.Adults"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Деца</label>
+                                            <input asp-for="EditReservationViewModel.Children" type="number" class="form-control" id="children" placeholder="@this.Model.Reservation.Children"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6 d-flex justify-content-start">
+                                        <button type="reset"
+                                                class="btn btn-light-secondary mr-1 mb-1" data-toggle="modal"
+                                                data-target="#border-less">
+                                            Изтрий
+                                        </button>
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-end">
+                                        <button id="hiddenButton" type="submit" class="btn btn-primary mr-1 mb-1" style="visibility: hidden">
+                                            Запази
+                                        </button>
+                                        <button id="edit" onclick="enable('firstName', 'lastName', 'email', 'roomType', 'startDate', 'endDate', 'adults', 'children', 'hiddenButton', 'edit')" type="button"
+                                                class="btn btn-primary mr-1 mb-1">
+                                            Редактирай
+                                        </button>
+                                        <script>
+                                            function enable(firstName, lastName, email, roomType, startDate, endDate, adults, children, hiddenButton, edit) {
+                                                document.getElementById(firstName).disabled = false;
+                                                document.getElementById(lastName).disabled = false;
+                                                document.getElementById(email).disabled = false;
+                                                document.getElementById(roomType).disabled = false;
+                                                document.getElementById(startDate).disabled = false;
+                                                document.getElementById(endDate).disabled = false;
+                                                document.getElementById(adults).disabled = false;
+                                                document.getElementById(children).disabled = false;
+                                                document.getElementById(edit).disabled = true;
+
+                                                document.getElementById(hiddenButton).style.visibility = "visible";
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="modal fade text-left modal-borderless" id="border-less" tabindex="-1"
+                                 role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Изтрий резервация</h5>
+                                            <button type="button" class="close rounded-pill"
+                                                    data-dismiss="modal" aria-label="Close">
+                                                <i data-feather="x"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                Сигурни ли сте, че искате да изтриете тази резервация? Това е необратим процес.
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light-primary"
+                                                    data-dismiss="modal">
+                                                <i class="bx bx-x d-block d-sm-none"></i>
+                                                <span class="d-none d-sm-block">Затвори</span>
+                                            </button>
+                                            <form asp-controller="Reservations" asp-action="Delete" asp-route-id="@string.Concat(this.Model.Reservation.Id, " ", this.Model.Role)" method="post">
+                                                <input type="submit" class="btn btn-primary ml-1" name="name" value="Изтрий" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @if (cleanings.Any(cleaning => cleaning.Date > this.Model.Reservation.StartDate && cleaning.Date < this.Model.Reservation.EndDate))
+    {
+        <div class="row" id="table-hover-row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Почиствания</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Почистил</th>
+                                        <th>Щети</th>
+                                        <th>Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cleaning in cleanings.OrderByDescending(cleaning => cleaning.Date))
+                                    {
+                                        var damages = @cleaning.IsDamaged ? "Да" : "Не";
+                                        var status = cleaning.Status == CleaningStatus.Upcoming ? "Предстоящо"
+                                            : cleaning.Status == CleaningStatus.Done ? "Минало" : "Прескочено";
+
+                                        <tr>
+                                            <td>@cleaning.Date.ToString("dd.MM.yyyy") г.</td>
+                                            <td>@(cleaning.Cleaner != null ? Html.Raw($"{cleaning.Cleaner.FirstName} {cleaning.Cleaner.LastName}") : Html.Raw("-"))</td>
+                                            <td>@(cleaning.Status != CleaningStatus.Done ? "-" : @damages)</td>
+                                            <td>@status</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

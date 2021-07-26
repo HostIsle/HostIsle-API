@@ -1,0 +1,68 @@
+﻿@using HostIsle.Data.Models.Hotels.Enums
+@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model HotelInformationViewModel
+@{
+    this.Layout = "_UsersLayout";
+}
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <h3>Добави почистване</h3>
+        <p class="text-subtitle text-muted">Тук може да добавяте почиствания.</p>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Добави почистване
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Cleanings" asp-action="Create" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" id="event-form">
+                        <div class="form-group mb-3">
+                            <label for="room-type">Стая</label>
+                            <select asp-for="CreateCleaningViewModel.RoomNumber" id="room-type" class="form-control">
+                                @foreach (var room in this.Model.Hotel.Rooms)
+                                {
+                                    var roomType = room.RoomType switch
+                                    {
+                                        RoomType.Apartment => "Апартамент",
+                                        RoomType.Double => "Двойна",
+                                        RoomType.Quad => "Четворна",
+                                        RoomType.Studio => "Студио",
+                                        RoomType.Suite => "Суит",
+                                        RoomType.Triple => "Тройна",
+                                        _ => null
+                                    };
+                                    <option value="@room.RoomNumber">@room.RoomNumber, @roomType</option>
+                                }
+
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label">Дата</label>
+                            <input type="date" asp-for="CreateCleaningViewModel.Date" class="form-control" form="event-form" rows="1"
+                                   placeholder="25.01.2021" maxlength="30"
+                                   style="resize: none;" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="room-type">Задай</label>
+                            <select asp-for="CreateCleaningViewModel.AssignedTo" id="room-type" class="form-control">
+                                @foreach (var cleaner in this.Model.Cleaners)
+                                {
+                                    <option value="@cleaner.User.Id">@cleaner.User.FirstName @cleaner.User.LastName</option>
+                                }
+
+                            </select>
+
+                        </div>
+                        <div class="clearfix">
+                            <button class="btn btn-primary float-right" type="submit">Добави</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

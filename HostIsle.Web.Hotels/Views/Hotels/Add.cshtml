@@ -1,0 +1,79 @@
+﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model HotelRegisterViewModel
+@{
+    this.Layout = "_LogOutLayout";
+}
+<div id="auth">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-sm-12 mx-auto">
+                <div class="card pt-4">
+                    <div class="card-body">
+                        <div class="text-center mb-5">
+                            <img src="~/images/logos/hotel_manager3_3.png" height="96" class='mb-4'>
+                            <h3>Регистрирай хотел</h3>
+                            <p>Моля попълнете тази форма, за да регистрирате хотел.</p>
+                        </div>
+                        <form method="post" asp-controller="Hotels" asp-action="Create" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Име на хотела</label>
+                                        <input type="text" asp-for="Name" class="form-control">
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Тел. номер</label>
+                                        <input type="tel" asp-for="PhoneNumber" class="form-control" pattern="[0-9]{3} [0-9]{3} [0-9]{4}">
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Град</label>
+                                        <input type="text" asp-for="TownName" class="form-control">
+                                        <span asp-validation-for="TownName" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Адрес</label>
+                                        <input type="text" asp-for="Address" class="form-control">
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Период на почистване на стаите</label>
+                                        <input type="text" asp-for="CleaningPeriod" class="form-control">
+                                        <span asp-validation-for="CleaningPeriod" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Изображение</label>
+                                        <div class="form-file">
+                                            <input name="image" asp-for="Image" type="file" class="form-file-input">
+                                            <label class="form-file-label">
+                                                <span class="form-file-text" id="hotel-registration-image">Изберете файл...</span>
+                                            </label>
+                                        </div>
+                                        <span asp-validation-for="Image" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <button type="submit" class="btn btn-primary float-right">Регистрирай</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

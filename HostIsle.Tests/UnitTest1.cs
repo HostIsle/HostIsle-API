@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace HostIsle.Tests
+namespace HostIsle.Web.Tests
 {
     public class UnitTest1
     {

@@ -1,0 +1,104 @@
+﻿@using HostIsle.Data.Models.Hotels.Enums
+@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model HotelInformationViewModel
+@{
+    this.Layout = "_UsersLayout";
+}
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <h3>Почиствания</h3>
+        <p class="text-subtitle text-muted">
+            Тук можете да задавате стаи за почистване на почистващия
+            персонал.
+        </p>
+    </div>
+    <div class="row">
+        @if (this.Model.Cleanings.Any(c => c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy")))
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Етажи</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                @foreach (var floor in this.Model.Floors.OrderBy(f => f))
+                                {
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link @if (floor == this.Model.Floors.Min()){@Html.Raw("active")}" id="floor-@floor-tab" data-toggle="tab" href="#floor-@floor"
+                                           role="tab" aria-controls="@floor" aria-selected="@Html.Raw(floor == this.Model.Floors.Min() ? "true" : "false")">@floor етаж</a>
+                                    </li>
+                                }
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                @foreach (var floor in this.Model.Floors.OrderBy(f => f))
+                                {
+                                    <div class="tab-pane fade @if (floor == this.Model.Floors.Min()){@Html.Raw("show active")}" id="floor-@floor" role="tabpanel"
+                                         aria-labelledby="@floor-tab">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>СТАЯ</th>
+                                                        <th>ТИП</th>
+                                                        <th>ЗАЕТА</th>
+                                                        <th>СЪСТОЯНИЕ</th>
+                                                        <th style="text-align: left;">ЗАДАЙ</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var cleaning in this.Model.Cleanings.Where(c => c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy") && c.Room.Floor == floor && c.Cleaner == null))
+                                                    {
+                                                        var isBusy = @cleaning.Room.IsBusy ? "Да" : "Не";
+
+                                                        var status = cleaning.Status == CleaningStatus.Upcoming ? "Предстоящо"
+                                                            : cleaning.Status == CleaningStatus.Done ? "Минало" : "Прескочено";
+
+                                                        var roomType = cleaning.Room.RoomType switch
+                                                        {
+                                                            RoomType.Apartment => "Апартамент",
+                                                            RoomType.Double => "Двойна",
+                                                            RoomType.Quad => "Четворна",
+                                                            RoomType.Studio => "Студио",
+                                                            RoomType.Suite => "Суит",
+                                                            RoomType.Triple => "Тройна",
+                                                            _ => null
+                                                        };
+
+                                                        <tr>
+                                                            <td>@cleaning.Room.RoomNumber</td>
+                                                            <td>@roomType</td>
+                                                            <td>@isBusy</td>
+                                                            <td>@status</td>
+                                                            <td style="text-align: left;">
+                                                                <a href="#" id="@cleaning.Id" data-toggle="dropdown" aria-haspopup="true"
+                                                                   aria-expanded="false"><i class="far fa-caret-square-down"></i></a>
+
+                                                                <div class="dropdown-menu" aria-labelledby="@cleaning.Id">
+                                                                    @{
+                                                                        foreach (var cleaner in this.Model.Cleaners)
+                                                                        {
+                                                                            <form asp-controller="Cleanings" asp-action="Assign" asp-route-id="@String.Concat(cleaning.Id, " ", cleaner.User.Id, " ", this.Model.Role)">
+                                                                                <button type="submit" class="dropdown-item">@cleaner.User.FirstName @cleaner.User.LastName</button>
+                                                                            </form>
+                                                                        }
+                                                                    }
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

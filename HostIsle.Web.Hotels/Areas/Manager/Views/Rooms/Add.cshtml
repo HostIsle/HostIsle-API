@@ -1,0 +1,61 @@
+﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model HotelInformationViewModel
+@{
+    this.Layout = "_LogOutLayout";
+}
+<div id="auth">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-sm-12 mx-auto">
+                <div class="card pt-4">
+                    <div class="card-body">
+                        <div class="text-center mb-5">
+                            <img src="~/images/logos/hotel_manager3_3.png" height="96" class='mb-4'>
+                            <h3>Добави стая</h3>
+                            <p>Моля попълнете тази форма, за да създадете стая.</p>
+                        </div>
+                        <form method="post" asp-controller="Rooms" asp-action="Create" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Номер</label>
+                                        <input type="text" asp-for="RoomRegisterViewModel.RoomNumber" class="form-control">
+                                        <span asp-validation-for="RoomRegisterViewModel.RoomNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Етаж</label>
+                                        <input type="number" asp-for="RoomRegisterViewModel.Floor" class="form-control">
+                                        <span asp-validation-for="RoomRegisterViewModel.Floor" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="room-type">Тип</label>
+                                        <select asp-for="RoomRegisterViewModel.Type"id="room-type" class="form-control">
+                                            <option value="" selected disabled hidden>-- Избери тип --</option>
+                                            <option value="0">Суит</option>
+                                            <option value="1">Студио</option>
+                                            <option value="2">Апартамент</option>
+                                            <option value="3">Двойна</option>
+                                            <option value="4">Тройна</option>
+                                            <option value="5">Четворна</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="clearfix">
+                                <button type="submit" class="btn btn-primary float-right">Регистрирай</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

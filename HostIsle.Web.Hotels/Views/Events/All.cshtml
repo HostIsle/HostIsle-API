@@ -1,0 +1,90 @@
+﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model HotelInformationViewModel
+@{
+    this.Layout = "_UsersLayout";
+}
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <h3>Събития</h3>
+        <p class="text-subtitle text-muted">Тук може да видите всички събития.</p>
+    </div>
+
+    @if (this.Model.Hotel.Events.Any(e => e.Date >= DateTime.Now))
+    {
+        <section>
+            <div class="row">
+                <h5>Предстоящи</h5>
+            </div>
+            <br />
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+                @foreach (var item in this.Model.Hotel.Events.Where(e => e.Date >= DateTime.Now))
+                {
+                    var zeroMinute = item.Date.Minute == 0 ? "0" : string.Empty;
+                    var zeroHour = item.Date.Hour < 10 ? "0" : string.Empty;
+
+                    var date = @item.Date.Date.ToString("dd/MM/yyyy");
+                    var hours = @String.Concat(zeroHour, @item.Date.Hour);
+                    var minutes = @String.Concat(item.Date.Minute, zeroMinute);
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Title</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">@date</h6>
+                                <h6 class="card-subtitle mb-2 text-muted">@hours:@minutes</h6>
+                                <p class="card-text">@item.Description</p>
+                            </div>
+                            @if (this.Model.Role != "Guest")
+                            {
+                                <form asp-controller="Events" asp-action="Delete" asp-route-id="@String.Concat(item.Id, " ", this.Model.Role)" method="post">
+                                    <input type="submit" value="Изтрий" class="btn btn-default" />
+                                </form>
+                            }
+                            <br />
+                        </div>
+                    </div>
+                }
+            </div>
+            <br />
+        </section>
+    }
+
+
+    @if (this.Model.Hotel.Events.Any(e => e.Date < DateTime.Now))
+    {
+        <section>
+            <div class="row">
+                <h5>Минали</h5>
+            </div>
+            <br />
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+                @foreach (var item in this.Model.Hotel.Events.Where(e => e.Date < DateTime.Now))
+                {
+                    var zeroMinute = item.Date.Minute == 0 ? "0" : string.Empty;
+                    var zeroHour = item.Date.Hour < 10 ? "0" : string.Empty;
+
+                    var date = @item.Date.Date.ToString("dd/MM/yyyy");
+                    var hours = @String.Concat(zeroHour, @item.Date.Hour);
+                    var minutes = @String.Concat(item.Date.Minute, zeroMinute);
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Title</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">@date</h6>
+                                <h6 class="card-subtitle mb-2 text-muted">@hours:@minutes</h6>
+                                <p class="card-text">@item.Description</p>
+                            </div>
+                            @if (this.Model.Role != "Guest")
+                            {
+                                <form asp-controller="Events" asp-action="Delete" asp-route-id="@String.Concat(item.Id, " ", this.Model.Role)" method="post">
+                                    <input type="submit" value="Изтрий" class="btn btn-default" />
+                                </form>
+                            }
+                            <br />
+                        </div>
+                    </div>
+                }
+            </div>
+            <br />
+        </section>
+    }
+</div>

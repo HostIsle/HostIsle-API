@@ -1,0 +1,62 @@
+﻿@using HostIsle.Data.Models.Hotels.Enums
+@{
+    var cleanings = this.Model.Cleanings.Where(cleaning => cleaning.Status == CleaningStatus.Done && cleaning.Room.Hotel.Id == this.Model.Hotel.Id && cleaning.Cleaner?.Id == this.User.FindFirst("Id").Value).ToList();
+}
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <h3>Минали почиствания</h3>
+                <p class="text-subtitle">Тук може да следите вашите почиствания, отбелязани като завършени.</p>
+            </div>
+        </div>
+    </div>
+    @if (cleanings.Any())
+    {
+        <section class="section">
+            <div class="row" id="table-hover-row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Дата</th>
+                                            <th>Стая</th>
+                                            <th>Тип</th>
+                                            <th>Щети</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var cleaning in cleanings.OrderByDescending(cleaning => cleaning.Date))
+                                        {
+                                            var damages = cleaning.IsDamaged ? "Да" : "Не";
+                                            var roomType = cleaning.Room.RoomType switch
+                                            {
+                                                RoomType.Apartment => "Апартамент",
+                                                RoomType.Double => "Двойна",
+                                                RoomType.Quad => "Четворна",
+                                                RoomType.Studio => "Студио",
+                                                RoomType.Suite => "Суит",
+                                                RoomType.Triple => "Тройна",
+                                                _ => null
+                                            };
+                                            <tr>
+                                                <td>@cleaning.Date.ToString("dd.MM.yyyy") г.</td>
+                                                <td>@cleaning.Room.RoomNumber</td>
+                                                <td>@roomType</td>
+                                                <td>@(cleaning.Status != CleaningStatus.Done ? "-" : @damages)</td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+</div>

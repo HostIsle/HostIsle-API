@@ -1,0 +1,156 @@
+﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model HotelInformationViewModel
+@{
+    this.Layout = "_ProfileLayout";
+}
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Моят профил</h3>
+                <p class="text-subtitle text-muted">От тук може да управлявате вашия профил.</p>
+            </div>
+        </div>
+
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <div class="avatar avatar-xl mr-3">
+                                        <img src="@this.Model.CurrentUser.ImageUrl">
+                                    </div>
+                                    <div class="mt-3">
+                                        <h4>@this.Model.CurrentUser.FirstName @this.Model.CurrentUser.LastName</h4>
+                                        <button type="button" class="btn btn-outline-primary block"
+                                                data-toggle="modal" data-target="#default">
+                                            Промени
+                                            снимка
+                                        </button>
+
+                                        <div class="modal fade text-left" id="default" tabindex="-1"
+                                             role="dialog" aria-labelledby="myModalLabel1"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable"
+                                                 role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="myModalLabel1">
+                                                            Промени
+                                                            профилна
+                                                            снимка
+                                                        </h5>
+                                                        <button type="button" class="close rounded-pill"
+                                                                data-dismiss="modal" aria-label="Close">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                    <form asp-area="default" asp-controller="Users" asp-action="ChangePhoto" method="post" enctype="multipart/form-data">
+                                                        <div class="modal-body">
+                                                            <p>
+                                                                Тук може да промените вашата профилна снимка
+                                                                като първо
+                                                                прикачите файл, а след това потвърдите.
+                                                            </p>
+
+                                                            <div class="row">
+
+                                                                <div class="col-md-12">
+                                                                    <p>Прикачи файл</p>
+                                                                    <div class="form-file">
+                                                                        <input asp-for="UserProfileViewModel.Image" type="file"
+                                                                               class="form-file-input">
+                                                                        <label class="form-file-label">
+                                                                            <span class="form-file-text">
+                                                                                Изберете
+                                                                                файл...
+                                                                            </span>
+                                                                            <span class="form-file-button btn-primary ">
+                                                                                <i data-feather="upload"></i>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn"
+                                                                    data-dismiss="modal">
+                                                                <i class="bx bx-x d-block d-sm-none"></i>
+                                                                <span class="d-none d-sm-block">Затвори</span>
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary ml-1">
+                                                                <i class="bx bx-check d-block d-sm-none"></i>
+                                                                <span class="d-none d-sm-block">Промени</span>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <form asp-area="default" asp-controller="Users" asp-action="Edit" method="post">
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label>Първо име</label>
+                                            <input asp-for="UserProfileViewModel.FirstName" type="text" class="form-control" id="firstName" placeholder="@this.Model.CurrentUser.FirstName">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label>Фамилно име</label>
+                                            <input asp-for="UserProfileViewModel.LastName" type="text" class="form-control" id="lastName" placeholder="@this.Model.CurrentUser.LastName">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <div class="col-6 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary mr-1 mb-1">
+                                                Запази
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Забравена парола? </h3>
+                        <p class="text-subtitle text-muted">Искате да промените текущата ви парола? Последвайте връзката по-долу.</p>
+
+                        <div class="col-12 d-flex justify-content-end">
+                            <form asp-area="Identity" asp-page="/Account/ForgotPassword" method="post">
+                                <button type="submit" class="btn btn-primary mr-1 mb-1">
+                                    Промени
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

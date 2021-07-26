@@ -1,0 +1,52 @@
+﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model GetHotelsViewModel
+@{
+    this.Layout = "_LoggedLayout";
+    var httpContext = new HttpContextAccessor();
+    var username = httpContext.HttpContext.User.Identity.Name;
+}
+
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <h3>Моите хотели</h3>
+        <h3>@username</h3>
+        <p class="text-subtitle text-muted">Това са всички хотели, към които сте свързани:</p>
+    </div>
+    <section class="section">
+        <div class="row mb-2">
+            @foreach (var item in Model.RenderedHotels)
+            {
+                var role = item.Role switch
+                {
+                    "Manager" => "Управител",
+                    "Receptionist" => "Рецепционист",
+                    "Cleaner" => "Камериер",
+                    "Guest" => "Гост",
+                    _ => string.Empty
+                };
+
+                <div class="col-12 col-md-3">
+                    <div class="card">
+                        <div class="card-content">
+                            <img class="card-img img-fluid" src="@item.Hotel.ImageUrl" style="width:100%"
+                                 alt="Card image">
+                            <div class="card-img-overlay overlay-dark d-flex justify-content-between flex-column">
+                                <div class="overlay-content">
+                                    <p class="card-text text-ellipsis">
+                                        @item.Hotel.Name, @item.Hotel.Town.Name
+                                    </p>
+                                    <p class="card-text text-ellipsis">
+                                        @role
+                                    </p>
+                                </div>
+                                <div class="overlay-status">
+                                    <a asp-area="@item.Role" asp-controller="Home" asp-action="Dashboard" asp-route-id="@String.Concat(item.Hotel.Id, " ", item.Role)" class="btn btn-outline-white btn-sm">Влез</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>

@@ -1,0 +1,149 @@
+﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model GetHotelsViewModel
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Хотел Мениджър</title>
+
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="~/css/bootstrap.css" rel="stylesheet">
+    <link href="~/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/vendors/chartjs/Chart.min.css">
+    <link rel="stylesheet" href="~/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/css/app.css">
+    <link rel="shortcut icon" href="~/images/logos/hotel_manager3_3.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class='active'>
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <img src="~/images/hotel_manager3_4.png" alt="" srcset="">
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-item">
+                            <a asp-controller="Users" asp-action="Profile" class='sidebar-link'>
+                                <i data-feather="user" width="20"></i>
+                                <span>Моят профил</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+
+        <div id="main">
+            <nav class="navbar navbar-header navbar-expand navbar-light">
+                <a class="sidebar-toggler" href="#"><span class="navbar-toggler-icon"></span></a>
+                <button class="btn navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav d-flex align-items-center navbar-light ml-auto">
+                        @if (bool.Parse(this.User.FindFirst("IsManager").Value))
+                        {
+                            <li class="dropdown nav-icon mr-3">
+
+                                <a asp-controller="Hotels" asp-action="Add">
+                                    <div class="d-lg-inline-block">
+                                        <i class="fas fa-plus"></i>
+                                    </div>
+                                </a>
+
+                            </li>
+                        }
+                        <li class="dropdown nav-icon mr-3">
+                            <a href="#" data-toggle="modal" data-target="#border-less">
+                                <div class="d-lg-inline-block">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </div>
+                            </a>
+                            <div class="modal fade text-left modal-borderless" id="border-less" tabindex="-1"
+                                 role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Присъедини се към хотел</h5>
+                                            <button type="button" class="close rounded-pill" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <i data-feather="x"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="col-md-12 mb-6">
+                                                <form asp-controller="Users" asp-action="CreateRequest" method="post">
+                                                    <label>Изберете хотел</label>
+                                                    <select asp-for="HotelId" class="choices form-select">
+                                                        @foreach (var item in Model?.Hotels)
+                                                        {
+                                                            <option value="@item.Id">@item.Name, @item.Town.Name</option>
+                                                        }
+                                                    </select>
+
+                                                    <label>Изберете роля</label>
+                                                    <select asp-for="Role" class="choices form-select">
+                                                        <option value="Receptionist">Рецепционист</option>
+                                                        <option value="Cleaner">Камериер</option>
+                                                    </select>
+
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary ml-1"
+                                                                data-dismiss="modal">
+                                                            <i class="bx bx-check d-block d-sm-none"></i>
+                                                            <span class="d-none d-sm-block">Потвърди</span>
+                                                        </button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown"
+                               class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                <div class="avatar mr-1">
+                                    <img src="@this.User.FindFirst("ImageUrl").Value">
+                                </div>
+                                <div class="d-none d-md-block d-lg-inline-block">Здравей, @(this.User.FindFirst("FirstName").Value)!</div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" asp-controller="Users" asp-action="Profile"><i data-feather="user"></i> Профил</a>
+                                <div class="dropdown-divider"></div>
+                                <form method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })">
+                                    <div class="clearfix">
+                                        <button type="submit" class="dropdown-item"><i data-feather="log-out"></i> Изход</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            @this.RenderBody()
+
+        </div>
+    </div>
+    <script src="~/js/feather-icons/feather.min.js"></script>
+    <script src="~/js/app.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/vendors/chartjs/Chart.min.js"></script>
+    <script src="~/vendors/apexcharts/apexcharts.min.js"></script>
+    <script src="~/js/pages/dashboard.js"></script>
+    @await this.RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

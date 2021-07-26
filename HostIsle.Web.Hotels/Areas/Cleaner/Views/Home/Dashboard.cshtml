@@ -1,0 +1,72 @@
+﻿@using HostIsle.Data.Models.Hotels.Enums
+@{ 
+    var oldCleanings = this.Model.Cleanings.Where(cleaning => cleaning.Status == CleaningStatus.Done && cleaning.Room.Hotel.Id == this.Model.Hotel.Id && cleaning.Cleaner?.Id == this.User.FindFirst("Id").Value).ToList().Count;
+    var upcomingCleanings = this.Model.Cleanings.Where(c => c.Status == CleaningStatus.Upcoming && c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy") && c.Room.HotelId == this.Model.Hotel.Id && c.Cleaner?.Id == this.Model.UserId).ToList().Count;
+}
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <h3>Хотел "Плаза" Бургас</h3>
+        <p class="text-subtitle text-muted">*Информацията се отнася за текущия ден</p>
+    </div>
+    <section class="section">
+        <div class="row mb-2">
+            <div class="col-12 col-md-3">
+                <a href="dashboard.html">
+                    <div class="card card-statistic">
+                        <div class="card-body p-0">
+                            <div class="d-flex flex-column">
+                                <div class='px-3 py-3 d-flex justify-content-between'>
+                                    <h3 class='card-title'>Почистени</h3> 
+                                    <div class="card-right d-flex align-items-center">
+                                        <p>@oldCleanings</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-3">
+                <a href="cleaning.html">
+                    <div class="card card-statistic">
+                        <div class="card-body p-0">
+                            <div class="d-flex flex-column">
+                                <div class='px-3 py-3 d-flex justify-content-between'>
+                                    <h3 class='card-title'>За почистване</h3>
+                                    <div class="card-right d-flex align-items-center">
+                                        <p>@upcomingCleanings</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <section class="section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Месечен отчет</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Седмичен отчет</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="radialGradient"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>

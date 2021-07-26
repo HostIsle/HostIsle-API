@@ -1,0 +1,286 @@
+﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model HotelInformationViewModel
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Хотел Мениджър</title>
+
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link rel="stylesheet" href="~/css/bootstrap.css">
+    <link rel="stylesheet" href="~/vendors/chartjs/Chart.min.css">
+    <link rel="stylesheet" href="~/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/css/app.css">
+    <link rel="shortcut icon" href="~/images/logos/hotel_manager3_3.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
+
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class='active'>
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <a asp-area="default" asp-controller="Home" asp-action="Index"><img src="~/images/hotel_manager3_4.png"></a>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        @if (this.Model.Role == "Guest")
+                        {
+                            <li class="sidebar-item">
+                                <a asp-controller="Home" asp-action="Dashboard" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-suitcase" width="20"></i>
+                                    <span>Моят престой</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Signals" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-comment-alt" width="20"></i>
+                                    <span>Подай сигнал</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Events" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-calendar-alt" width="20"></i>
+                                    <span>Събития</span>
+                                </a>
+                            </li>
+                        }
+                        @if (this.Model.Role == "Cleaner")
+                        {
+                            <li class="sidebar-item">
+                                <a asp-area="Cleaner" asp-controller="Home" asp-action="Dashboard" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Табло</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-area="Cleaner" asp-controller="Cleanings" asp-action="Upcoming" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-calendar-plus"></i>
+                                    <span>Почиствания</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-area="Cleaner" asp-controller="Cleanings" asp-action="Old" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-address-book"></i>
+                                    <span>Минали почиствания</span>
+                                </a>
+                            </li>
+                        }
+                        @if (this.Model.Role == "Receptionist")
+                        {
+                            <li class="sidebar-item">
+                                <a asp-area="Receptionist" asp-controller="Home" asp-action="Dashboard" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-chart-line" width="20"></i>
+                                    <span>Табло</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Cleanings" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-calendar" width="20"></i>
+                                    <span>Почиствания</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Cleanings" asp-action="Add" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-calendar-plus" width="20"></i>
+                                    <span>Добави почистванe</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Reservations" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-address-book" width="20"></i>
+                                    <span>Резервации</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Signals" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-comment-alt" width="20"></i>
+                                    <span>Сигнали</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Reservations" asp-action="Add" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-user-plus" width="20"></i>
+                                    <span>Регистрирай гост</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Events" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-calendar" width="20"></i>
+                                    <span>Събития</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Events" asp-action="Add" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-edit" width="20"></i>
+                                    <span>Добави събитие</span>
+                                </a>
+                            </li>
+                        }
+                        @if (this.Model.Role == "Manager")
+                        {
+                            <li class="sidebar-item">
+                                <a asp-area="Manager" asp-controller="Home" asp-action="Dashboard" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-chart-line" width="20"></i>
+                                    <span>Табло</span>
+                                </a>
+                            </li>
+
+                            <li class="dropdown nav-icon mr-3">
+                                <a asp-controller="Rooms" asp-action="Add" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-plus" width="20"></i>
+                                    <span>Добави стая</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Requests" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-user-check" width="20"></i>
+                                    <span>Заявки</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Reservations" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-address-book" width="20"></i>
+                                    <span>Резервации</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Employees" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-user-tie" width="20"></i>
+                                    <span>Служители</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Signals" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-comment-alt" width="20"></i>
+                                    <span>Сигнали</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Reservations" asp-action="Add" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-user-plus" width="20"></i>
+                                    <span>Регистрирай гост</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Events" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-calendar" width="20"></i>
+                                    <span>Събития</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Events" asp-action="Add" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="fas fa-edit" width="20"></i>
+                                    <span>Добави събитие</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Cleanings" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-calendar" width="20"></i>
+                                    <span>Почиствания</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-controller="Cleanings" asp-action="Add" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" class='sidebar-link'>
+                                    <i class="far fa-calendar-plus" width="20"></i>
+                                    <span>Добави почистванe</span>
+                                </a>
+                            </li>
+                        }
+                        @if (bool.Parse(this.User.FindFirst("IsAdministrator").Value))
+                        {
+                            <li class="sidebar-item">
+                                <a asp-area="Administrator" asp-controller="Home" asp-action="Index" class='sidebar-link'>
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Табло</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a asp-area="Administrator" asp-controller="Home" asp-action="Users" class='sidebar-link'>
+                                    <i class="fas fa-users"></i>
+                                    <span>Потребители</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+
+        <div id="main">
+            <nav class="navbar navbar-header navbar-expand navbar-light">
+                <a class="sidebar-toggler" href="#"><span class="navbar-toggler-icon"></span></a>
+                <button class="btn navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav d-flex align-items-center navbar-light ml-auto">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown"
+                               class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                <div class="avatar mr-1">
+                                    <img src="@this.User.FindFirst("ImageUrl").Value">
+                                </div>
+                                <div class="d-none d-md-block d-lg-inline-block">Здравей, @(this.User.FindFirst("FirstName").Value)!</div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" asp-area="default" asp-controller="Users" asp-action="Profile"><i data-feather="user"></i> Профил</a>
+                                <div class="dropdown-divider"></div>
+                                <form method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/")">
+                                    <div class="clearfix">
+                                        <button type="submit" class="dropdown-item"><i data-feather="log-out"></i> Изход</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            @this.RenderBody()
+
+        </div>
+    </div>
+    <script src="~/vendors/dayjs/dayjs.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="~/js/feather-icons/feather.min.js"></script>
+    <script src="~/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/js/app.js"></script>
+    <script src="~/vendors/chartjs/Chart.min.js"></script>
+    <script src="~/vendors/apexcharts/apexcharts.min.js"></script>
+    <script src="~/js/pages/dashboard.js"></script>
+    <script src="~/js/pages/ui-apexchart.js"></script>
+    <script src="~/js/main.js"></script>
+    @await this.RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

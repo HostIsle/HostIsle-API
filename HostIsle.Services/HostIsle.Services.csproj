@@ -4,4 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.15.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HostIsle.Data.Models.Hotels\HostIsle.Data.Models.Hotels.csproj" />
+    <ProjectReference Include="..\HostIsle.Data\HostIsle.Data.csproj" />
+    <ProjectReference Include="..\HostIsle.Web.Hotels\HostIsle.Web.Hotels.csproj" />
+  </ItemGroup>
+
 </Project>

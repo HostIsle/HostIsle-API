@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Хотел Мениджър</title>
+
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="~/css/bootstrap.css" rel="stylesheet">
+    <link href="~/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/vendors/chartjs/Chart.min.css">
+    <link rel="stylesheet" href="~/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/css/app.css">
+    <link rel="shortcut icon" href="~/images/logos/hotel_manager3_3.png" type="image/x-icon">
+</head>
+<body>
+
+    @this.RenderBody()
+
+
+    <script src="~/js/feather-icons/feather.min.js"></script>
+    <script src="~/js/app.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/vendors/chartjs/Chart.min.js"></script>
+    <script src="~/vendors/apexcharts/apexcharts.min.js"></script>
+    <script src="~/js/pages/dashboard.js"></script>
+    @await this.RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

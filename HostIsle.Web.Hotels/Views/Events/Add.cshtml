@@ -1,0 +1,53 @@
+﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
+@model HotelInformationViewModel
+@{
+    this.Layout = "_UsersLayout";
+}
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <h3>Добави събитие</h3>
+        <p class="text-subtitle text-muted">Тук може да добавяте събития.</p>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Създай събитие
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Events" asp-action="Create" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" id="event-form">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Заглавие</label>
+                            <textarea asp-for="CreateEventViewModel.Title" class="form-control" form="event-form" rows="1"
+                                      placeholder="Кратко заглавие..." maxlength="30"
+                                      style="resize: none;"></textarea>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label">Дата</label>
+                            <input type="date" asp-for="CreateEventViewModel.Date" class="form-control" form="event-form" rows="1"
+                                   placeholder="25.01.2021" maxlength="30"
+                                   style="resize: none;" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label">Час</label>
+                            <input type="time" asp-for="CreateEventViewModel.Time" class="form-control" form="event-form" rows="1"
+                                   placeholder="20:00" maxlength="30" style="resize: none;" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label">Описание</label>
+                            <textarea asp-for="CreateEventViewModel.Description" class="form-control" form="event-form" rows="3"
+                                      placeholder="Опишете събитието..."></textarea>
+                        </div>
+                        <div class="clearfix">
+                            <button class="btn btn-primary float-right" type="submit">Създай</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
