@@ -37,8 +37,9 @@
         public DbSet<UserHotelRole> UserHotelRoles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //optionsBuilder.UseLazyLoadingProxies();
+{
+            optionsBuilder
+                .UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

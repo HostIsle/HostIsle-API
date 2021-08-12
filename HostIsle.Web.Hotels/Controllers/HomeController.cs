@@ -8,7 +8,7 @@ namespace HostIsle.Web.Hotels.Controllers
     using System.Threading.Tasks;
     using HostIsle.Data;
     using HostIsle.Data.Models.Hotels;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Web.ViewModels.Hotels;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : Controller
@@ -27,9 +27,7 @@ namespace HostIsle.Web.Hotels.Controllers
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                var userId = this.User.FindFirst("Id").Value;
-
-                var currentUser = (await this.userRepo.GetAllAsync()).FirstOrDefault(user => user.Id == userId);
+                var currentUser = (await this.userRepo.GetAllAsync()).FirstOrDefault(user => user.UserName == this.User.Identity.Name);
 
                 var list = new GetHotelsViewModel();
 
@@ -37,22 +35,18 @@ namespace HostIsle.Web.Hotels.Controllers
 
                 foreach (var item in currentUser.UserHotelRoles)
                 {
-                    var action = string.Empty;
-
-                    if (item.HotelRole.Role.Name == "Manager")
-                    {
-                        action = "Dashboard";
-                    }
-
                     list.RenderedHotels.Add(new HotelRenderViewModel
                     {
                         Hotel = item.HotelRole.Hotel,
                         Role = item.HotelRole.Role.Name,
-                        Action = action,
                     });
                 }
 
-                return this.View("Dashboard", list);
+                this.ViewBag.UserHotels = list.RenderedHotels;
+                this.ViewBag.Hotels = list.Hotels;
+                this.ViewBag.CurrentUser = currentUser;
+
+                return this.View("Dashboard");
             }
             else
             {

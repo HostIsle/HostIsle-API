@@ -1,10 +1,10 @@
 ﻿namespace HostIsle.Web.Hotels.Areas.Manager.Services.Interfaces
 {
+    using HostIsle.Web.ViewModels.Rooms;
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
 
     public interface IRoomService
     {
-        public Task CreateAsync(HotelInformationViewModel model, string id);
+        public Task CreateAsync(RoomRegisterViewModel model, string id);
     }
 }

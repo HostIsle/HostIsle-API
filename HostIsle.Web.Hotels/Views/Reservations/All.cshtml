@@ -1,7 +1,6 @@
 ﻿@using HostIsle.Data.Models.Hotels.Enums
-@using HostIsle.Web.Hotels.ViewModels.Hotels
-@model HotelInformationViewModel
 @{
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
     this.Layout = "_UsersLayout";
 }
 <div class="main-content container-fluid">
@@ -46,7 +45,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var reservation in @Model.Hotel.Reservations.Where(r => r.EndDate >= DateTime.Now))
+                                    @foreach (var reservation in data.Hotel.Reservations.Where(r => r.EndDate >= DateTime.Now))
                                     {
                                         var roomType = reservation.Room.RoomType switch
                                         {
@@ -67,7 +66,7 @@
                                                 <ul class="list-inline m-0">
 
                                                     <li class="list-inline-item">
-                                                        <form asp-controller="Reservations" asp-action="Free" asp-route-id="@String.Concat(this.Model.Role, " ", reservation.Id)" method="post">
+                                                        <form asp-controller="Reservations" asp-action="Free" asp-route-id="@String.Concat(data.Role, " ", reservation.Id)" method="post">
                                                             <button class="btn btn-primary btn-sm rounded-0" type="submit" data-toggle="tooltip"
                                                                     data-placement="top" title="Освободи">
                                                                 <i class="fas fa-door-open"></i>
@@ -76,7 +75,7 @@
                                                     </li>
                                                 </ul>
                                             </td>
-                                            <td><a asp-controller="Reservations" asp-action="Overview" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role, " ", reservation.Id)">Отвори</a></td>
+                                            <td><a asp-controller="Reservations" asp-action="Overview" asp-route-id="@String.Concat(data.Hotel.Id, " ", data.Role, " ", reservation.Id)">Отвори</a></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -97,7 +96,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var reservation in @Model.Hotel.Reservations.Where(r => r.EndDate < DateTime.Now))
+                                    @foreach (var reservation in data.Hotel.Reservations.Where(r => r.EndDate < DateTime.Now))
                                     {
                                         var roomType = reservation.Room.RoomType switch
                                         {

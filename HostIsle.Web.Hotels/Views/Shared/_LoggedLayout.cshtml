@@ -1,6 +1,8 @@
-﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
+﻿@using HostIsle.Data.Models.Hotels
 @model GetHotelsViewModel
-
+@{ 
+    var hotels = (List<Hotel>)this.ViewBag.Hotels;
+}
 <!DOCTYPE html>
 <html lang="bg">
 <head>
@@ -50,8 +52,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav d-flex align-items-center navbar-light ml-auto">
-                        @if (bool.Parse(this.User.FindFirst("IsManager").Value))
-                        {
                             <li class="dropdown nav-icon mr-3">
 
                                 <a asp-controller="Hotels" asp-action="Add">
@@ -61,7 +61,6 @@
                                 </a>
 
                             </li>
-                        }
                         <li class="dropdown nav-icon mr-3">
                             <a href="#" data-toggle="modal" data-target="#border-less">
                                 <div class="d-lg-inline-block">
@@ -84,7 +83,7 @@
                                                 <form asp-controller="Users" asp-action="CreateRequest" method="post">
                                                     <label>Изберете хотел</label>
                                                     <select asp-for="HotelId" class="choices form-select">
-                                                        @foreach (var item in Model?.Hotels)
+                                                        @foreach (var item in hotels)
                                                         {
                                                             <option value="@item.Id">@item.Name, @item.Town.Name</option>
                                                         }

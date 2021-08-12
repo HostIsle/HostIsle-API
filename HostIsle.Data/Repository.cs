@@ -1,6 +1,7 @@
 ﻿namespace HostIsle.Data
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
 
@@ -28,7 +29,7 @@
 
         public async Task<T> GetAsync(string id)
         {
-            return await dbSet.FindAsync(id);
+            return await this.dbSet.FindAsync(id);
         }
 
         public void Update(T model)

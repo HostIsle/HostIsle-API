@@ -1,7 +1,8 @@
 ﻿@using HostIsle.Data.Models.Hotels.Enums
-@{ 
-    var oldCleanings = this.Model.Cleanings.Where(cleaning => cleaning.Status == CleaningStatus.Done && cleaning.Room.Hotel.Id == this.Model.Hotel.Id && cleaning.Cleaner?.Id == this.User.FindFirst("Id").Value).ToList().Count;
-    var upcomingCleanings = this.Model.Cleanings.Where(c => c.Status == CleaningStatus.Upcoming && c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy") && c.Room.HotelId == this.Model.Hotel.Id && c.Cleaner?.Id == this.Model.UserId).ToList().Count;
+@{
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
+    var oldCleanings = data.Cleanings.Where(cleaning => cleaning.Status == CleaningStatus.Done && cleaning.Room.Hotel.Id == data.Hotel.Id && cleaning.Cleaner?.Id == this.User.FindFirst("Id").Value).ToList().Count;
+    var upcomingCleanings = data.Cleanings.Where(c => c.Status == CleaningStatus.Upcoming && c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy") && c.Room.HotelId == data.Hotel.Id && c.Cleaner?.Id == data.UserId).ToList().Count;
 }
 <div class="main-content container-fluid">
     <div class="page-title">

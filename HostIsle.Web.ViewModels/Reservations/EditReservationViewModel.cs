@@ -1,4 +1,4 @@
-﻿namespace HostIsle.Web.Hotels.ViewModels.Reservations
+﻿namespace HostIsle.Web.ViewModels.Reservations
 {
     using System;
 

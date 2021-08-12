@@ -5,7 +5,7 @@
 namespace HostIsle.Web.Hotels.Areas.Cleaner.Controllers
 {
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.Services.Interfaces;
+    using HostIsle.Services.Interfaces;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +33,13 @@ namespace HostIsle.Web.Hotels.Areas.Cleaner.Controllers
         /// <param name="id"> Id of the current hotel. </param>
         /// <returns> Returns the Dashboard view. </returns>
         [HttpGet]
-        public async Task<IActionResult> Dashboard(string id) => this.View(await this.hotelService.LoadCurrentHotelAsync(id));
+        public async Task<IActionResult> Dashboard(string id)
+        {
+            var model = await this.hotelService.LoadCurrentHotelAsync(id);
+
+            this.ViewBag.Model = model;
+
+            return this.View();
+        }
     }
 }

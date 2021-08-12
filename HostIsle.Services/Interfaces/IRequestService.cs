@@ -1,7 +1,7 @@
 ﻿namespace HostIsle.Services.Interfaces
 {
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Web.ViewModels.Hotels;
 
     public interface IRequestService
     {

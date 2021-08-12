@@ -2,7 +2,7 @@
 // Copyright (c) HotelCollab. All rights reserved.
 // </copyright>
 
-namespace HostIsle.Web.Hotels.ViewModels.Cleanings
+namespace HostIsle.Web.ViewModels.Cleanings
 {
     using System;
     using System.Collections.Generic;

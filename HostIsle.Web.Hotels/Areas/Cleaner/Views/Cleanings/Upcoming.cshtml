@@ -1,4 +1,9 @@
 ﻿@using HostIsle.Data.Models.Hotels.Enums
+@using HostIsle.Web.ViewModels.Rooms
+@model CleanRoomViewModel
+@{ 
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
+}
 <div class="main-content container-fluid">
     <div class="page-title">
         <h3>Предстоящи почиствания</h3>
@@ -21,7 +26,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var cleaning in this.Model.Cleanings.Where(c => c.Status == CleaningStatus.Upcoming && c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy") && c.Room.HotelId == this.Model.Hotel.Id && c.Cleaner?.Id == this.Model.UserId))
+                                @foreach (var cleaning in data.Cleanings.Where(c => c.Status == CleaningStatus.Upcoming && c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy") && c.Room.HotelId == data.Hotel.Id && c.Cleaner?.Id == data.UserId))
                                 {
                                     var roomType = cleaning.Room.RoomType switch
                                     {
@@ -47,7 +52,7 @@
 
                                                     <div class="form-group">
                                                         <div class="checkbox">
-                                                            <input asp-for="CleanRoomViewModel.IsDamaged" type="checkbox" class="checkbox-input">
+                                                            <input asp-for="IsDamaged" type="checkbox" class="checkbox-input">
                                                             <label>Забелязани неизправности</label>
                                                         </div>
                                                     </div>

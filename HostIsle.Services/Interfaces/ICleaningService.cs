@@ -1,8 +1,8 @@
 ﻿namespace HostIsle.Services.Interfaces
 {
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.Areas.Cleaner.ViewModels;
-    using HostIsle.Web.Hotels.ViewModels.Cleanings;
+    using HostIsle.Web.ViewModels.Cleanings;
+    using HostIsle.Web.ViewModels.Rooms;
 
     public interface ICleaningService
     {

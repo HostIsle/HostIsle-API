@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using HostIsle.Data.Models.Hotels;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Web.ViewModels.Hotels;
 
     public interface IHotelService
     {

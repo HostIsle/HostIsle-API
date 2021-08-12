@@ -1,8 +1,8 @@
 ﻿namespace HostIsle.Web.Hotels.Areas.Receptionist.Controllers
 {
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Services.Interfaces;
+using HostIsle.Web.ViewModels.Reservations;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -20,29 +20,47 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> All(string id, string returnedId) =>
-            this.View("~/Views/Reservations/All.cshtml", await this.hotelService.LoadCurrentHotelAsync(id == null ? returnedId : id));
+        public async Task<IActionResult> All(string id, string returnedId)
+        {
+            var model = await this.hotelService.LoadCurrentHotelAsync(id ?? returnedId);
+
+            this.ViewBag.Model = model;
+
+            return this.View("~/Views/Reservations/All.cshtml");
+        }
 
         [HttpGet]
-        public async Task<IActionResult> Add(string id) =>
-            this.View("~/Views/Reservations/Add.cshtml", await this.hotelService.LoadCurrentHotelAsync(id));
+        public async Task<IActionResult> Add(string id)
+        {
+            var model = await this.hotelService.LoadCurrentHotelAsync(id);
+
+            this.ViewBag.Model = model;
+
+            return this.View("~/Views/Reservations/Add.cshtml");
+        }
 
         [HttpGet]
-        public async Task<IActionResult> Overview(string id) =>
-            this.View("~/Views/Reservations/Overview.cshtml", await this.hotelService.LoadCurrentHotelAsync(id));
+        public async Task<IActionResult> Overview(string id)
+        {
+            var model = await this.hotelService.LoadCurrentHotelAsync(id);
+
+            this.ViewBag.Model = model;
+
+            return this.View("~/Views/Reservations/Overview.cshtml");
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Create(HotelInformationViewModel model, string id)
+        public async Task<IActionResult> Create(AddReservationViewModel model, string id)
         {
-            await this.reservationService.CreateAsync(model.AddReservationViewModel, id);
+            await this.reservationService.CreateAsync(model, id);
 
             return this.RedirectToAction("All", "Reservations", new { returnedId = id });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(HotelInformationViewModel model, string id)
+        public async Task<IActionResult> Update(EditReservationViewModel model, string id)
         {
-            var hotelId = await this.reservationService.UpdateAsync(model.EditReservationViewModel, id);
+            var hotelId = await this.reservationService.UpdateAsync(model, id);
 
             return this.RedirectToAction("All", "Reservations", new { returnedId = hotelId });
         }

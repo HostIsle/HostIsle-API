@@ -11,7 +11,7 @@
     using HostIsle.Data;
     using HostIsle.Data.Models.Hotels;
     using HostIsle.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Web.ViewModels.Hotels;
     using Microsoft.AspNetCore.Http;
 
     public class HotelService : IHotelService
@@ -114,9 +114,11 @@
             await this.townRepo.SaveChangesAsync();
             await this.hotelRepo.SaveChangesAsync();
 
+            var currentUser = (await this.userRepo.GetAllAsync()).FirstOrDefault(user => user.UserName == this.httpContextAccessor.HttpContext.User.Identity.Name);
+
             await this.userHotelRoleRepo.AddAsync(new UserHotelRole
             {
-                UserId = this.httpContextAccessor.HttpContext.User.FindFirst("Id").Value,
+                UserId = currentUser.Id,
                 HotelRoleId = hotel.HotelRoles.FirstOrDefault(hr => hr.Role.Name == "Manager").Id,
             });
 
@@ -127,13 +129,13 @@
 
         public async Task<HotelInformationViewModel> LoadCurrentHotelAsync(string id)
         {
-            var hotelInfo = id?.Split();
-            var hotelId = hotelInfo != null ? hotelInfo[0] : null;
+            var hotelInfo = id.Split();
+            var hotelId = hotelInfo?[0];
             string role = string.Empty;
             string employeeRole = string.Empty;
             Reservation reservation = null;
             ApplicationUser user = null;
-            ApplicationUser currentUser= null;
+            ApplicationUser currentUser = null;
 
             if (hotelInfo?.Length >= 2)
             {
@@ -160,9 +162,7 @@
                 r.EndDate.AddDays(1) > DateTime.Now);
             }
 
-            var userId = this.httpContextAccessor.HttpContext.User.FindFirst("Id").Value;
-
-            currentUser = await this.userRepo.GetAsync(userId);
+            currentUser = (await this.userRepo.GetAllAsync()).FirstOrDefault(user => user.UserName == this.httpContextAccessor.HttpContext.User.Identity.Name);
 
             var hotel = await this.hotelRepo.GetAsync(hotelId);
 
@@ -175,7 +175,7 @@
             var receptionists = (await this.userHotelRoleRepo.GetAllAsync()).Where(uh => uh.HotelRole.HotelId == hotelId && uh.HotelRole.Role.Name == "Receptionist").ToList();
 
             var isManager = (await this.userHotelRoleRepo.GetAllAsync())
-                .Where(uhr => uhr.User.Id == userId && uhr.HotelRole.HotelId == hotelId)
+                .Where(uhr => uhr.User.Id == currentUser.Id && uhr.HotelRole.HotelId == hotelId)
                 .Any(uhr => uhr.User.UserHotelRoles.Any(u => u.HotelRole.Role.Name == "Manager"));
 
             var model = new HotelInformationViewModel()
@@ -190,7 +190,7 @@
                 User = user,
                 Cleanings = cleanings,
                 Floors = floors,
-                UserId = userId,
+                UserId = currentUser.Id,
                 CurrentUser = currentUser,
             };
 

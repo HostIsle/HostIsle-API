@@ -5,8 +5,8 @@
 namespace HostIsle.Web.Hotels.Areas.Cleaner.Controllers
 {
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Services.Interfaces;
+    using HostIsle.Web.ViewModels.Rooms;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -39,7 +39,13 @@ namespace HostIsle.Web.Hotels.Areas.Cleaner.Controllers
         /// <returns> Returns a view. </returns>
         [HttpGet]
         public async Task<IActionResult> Upcoming(string id, string returnedId)
-            => this.View(await this.hotelService.LoadCurrentHotelAsync(id ?? returnedId));
+        {
+            var model = await this.hotelService.LoadCurrentHotelAsync(id ?? returnedId);
+
+            this.ViewBag.Model = model;
+
+            return this.View();
+        }
 
         /// <summary>
         /// Get the past events view.
@@ -47,7 +53,14 @@ namespace HostIsle.Web.Hotels.Areas.Cleaner.Controllers
         /// <param name="id"> Id from the base. </param>
         /// <returns> Returns a view. </returns>
         [HttpGet]
-        public async Task<IActionResult> Old(string id) => this.View(await this.hotelService.LoadCurrentHotelAsync(id));
+        public async Task<IActionResult> Old(string id)
+        {
+            var model = await this.hotelService.LoadCurrentHotelAsync(id);
+
+            this.ViewBag.Model = model;
+
+            return this.View();
+        }
 
         /// <summary>
         /// Method that changes the status from upcoming to cleaned.
@@ -56,9 +69,9 @@ namespace HostIsle.Web.Hotels.Areas.Cleaner.Controllers
         /// <param name="id"> Id from the base. </param>
         /// <returns> Returns the list with upcoming cleanings. </returns>
         [HttpPost]
-        public async Task<IActionResult> Clean(HotelInformationViewModel model, string id)
+        public async Task<IActionResult> Clean(CleanRoomViewModel model, string id)
         {
-            var hotelId = await this.cleaningService.CleanAsync(model.CleanRoomViewModel, id);
+            var hotelId = await this.cleaningService.CleanAsync(model, id);
 
             return this.RedirectToAction("Upcoming", "Cleanings", new { returnedId = hotelId });
         }

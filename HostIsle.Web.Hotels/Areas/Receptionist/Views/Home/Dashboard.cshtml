@@ -1,7 +1,10 @@
 ﻿@using HostIsle.Data.Models.Hotels.Enums
+@{ 
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
+}
 <div class="main-content container-fluid">
     <div class="page-title">
-        <h3>@this.Model.Hotel.Name, @this.Model.Hotel.Town.Name</h3>
+        <h3>@data.Hotel.Name, @data.Hotel.Town.Name</h3>
         <p class="text-subtitle text-muted">Тук може да видите пълна статистика за хотела.</p>
     </div>
     <section class="section">
@@ -14,7 +17,7 @@
                                 <div class='px-3 py-3 d-flex justify-content-between'>
                                     <h3 class='card-title'>Заети стаи</h3>
                                     <div class="card-right d-flex align-items-center">
-                                        <p>@this.Model.Hotel.Reservations.Where(r => r.EndDate >= DateTime.Now).ToList().Count</p>
+                                        <p>@data.Hotel.Reservations.Where(r => r.EndDate >= DateTime.Now).ToList().Count</p>
                                     </div>
                                 </div>
                             </div>
@@ -30,7 +33,7 @@
                                 <div class='px-3 py-3 d-flex justify-content-between'>
                                     <h3 class='card-title'>За почистване</h3>
                                     <div class="card-right d-flex align-items-center">
-                                        <p>@this.Model.Cleanings.Where(c => c.Room.HotelId == this.Model.Hotel.Id && c.Status == CleaningStatus.Upcoming).ToList().Count</p>
+                                        <p>@data.Cleanings.Where(c => c.Room.HotelId == this.Model.Hotel.Id && c.Status == CleaningStatus.Upcoming).ToList().Count</p>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +49,7 @@
                                 <div class='px-3 py-3 d-flex justify-content-between'>
                                     <h3 class='card-title'>Почистени</h3>
                                     <div class="card-right d-flex align-items-center">
-                                        <p>@this.Model.Cleanings.Where(c => c.Room.HotelId == this.Model.Hotel.Id && c.Status == CleaningStatus.Done).ToList().Count </p>
+                                        <p>@data.Cleanings.Where(c => c.Room.HotelId == this.Model.Hotel.Id && c.Status == CleaningStatus.Done).ToList().Count </p>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +65,7 @@
                                 <div class='px-3 py-3 d-flex justify-content-between'>
                                     <h3 class='card-title'>Събития</h3>
                                     <div class="card-right d-flex align-items-center">
-                                        <p>@this.Model.Hotel.Events.Count</p>
+                                        <p>@data.Hotel.Events.Count</p>
                                     </div>
                                 </div>
                             </div>

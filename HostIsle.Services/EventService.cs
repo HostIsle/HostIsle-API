@@ -5,7 +5,7 @@
     using HostIsle.Data;
     using HostIsle.Data.Models.Hotels;
     using HostIsle.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Web.ViewModels.Events;
 
     public class EventService : IEventService
     {
@@ -16,15 +16,15 @@
             this.eventRepo = eventRepo;
         }
 
-        public async Task CreateAsync(HotelInformationViewModel model, string id)
+        public async Task CreateAsync(CreateEventViewModel model, string id)
         {
-            var date = DateTime.Parse($"{model.CreateEventViewModel.Date}T{model.CreateEventViewModel.Time}");
+            var date = DateTime.Parse($"{model.Date}T{model.Time}");
 
             var @event = new Event()
             {
-                Title = model.CreateEventViewModel.Title,
+                Title = model.Title,
                 Date = date,
-                Description = model.CreateEventViewModel.Description,
+                Description = model.Description,
                 HotelId = id.Split()[0],
             };
 

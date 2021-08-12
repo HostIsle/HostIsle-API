@@ -1,8 +1,8 @@
 ﻿namespace HostIsle.Web.Hotels.Controllers
 {
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Services.Interfaces;
+    using HostIsle.Web.ViewModels.Hotels;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 

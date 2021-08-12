@@ -1,4 +1,4 @@
-﻿namespace HostIsle.Web.Hotels.ViewModels.Hotels
+﻿namespace HostIsle.Web.ViewModels.Hotels
 {
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Http;

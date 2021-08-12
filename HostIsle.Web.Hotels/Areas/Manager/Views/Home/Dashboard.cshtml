@@ -1,6 +1,10 @@
-﻿<div class="main-content container-fluid">
+﻿@using HostIsle.Web.ViewModels.Hotels
+@{ 
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
+}
+<div class="main-content container-fluid">
     <div class="page-title">
-        <h3>@Model.Hotel.Name, @Model.Hotel.Town.Name</h3>
+        <h3>@data.Hotel.Name, @data.Hotel.Town.Name</h3>
         <p class="text-subtitle text-muted">Тук може да видите пълна статистика за хотела.</p>
     </div>
     <section class="section">
@@ -13,7 +17,7 @@
                                 <div class='px-3 py-3 d-flex justify-content-between'>
                                     <h3 class='card-title'>Заети стаи</h3>
                                     <div class="card-right d-flex align-items-center">
-                                        <p>@Model.Hotel.Reservations.Where(r => r.EndDate >= DateTime.Now).ToList().Count</p>
+                                        <p>@data.Hotel.Reservations.Where(r => r.EndDate >= DateTime.Now).ToList().Count</p>
                                     </div>
                                 </div>
                             </div>
@@ -29,7 +33,7 @@
                                 <div class='px-3 py-3 d-flex justify-content-between'>
                                     <h3 class='card-title'>Рецепционисти</h3>
                                     <div class="card-right d-flex align-items-center">
-                                        <p>@Model.Receptionists.Count </p>
+                                        <p>@data.Receptionists.Count </p>
                                     </div>
                                 </div>
                             </div>
@@ -45,7 +49,7 @@
                                 <div class='px-3 py-3 d-flex justify-content-between'>
                                     <h3 class='card-title'>Почистващ персонал</h3>
                                     <div class="card-right d-flex align-items-center">
-                                        <p>@Model.Cleaners.Count </p>
+                                        <p>@data.Cleaners.Count </p>
                                     </div>
                                 </div>
                             </div>

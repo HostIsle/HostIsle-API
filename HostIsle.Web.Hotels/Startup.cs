@@ -1,21 +1,25 @@
-using HostIsle.Data;
-using HostIsle.Data.Models.Hotels;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace HostIsle.Web.Hotels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using HostIsle.Data;
+    using HostIsle.Data.Models.Hotels;
+    using HostIsle.Services;
+    using HostIsle.Services.Interfaces;
+    using HostIsle.Web.Hotels.Areas.Manager.Services.Interfaces;
+    using HostIsle.Web.Hotels.Areas.Mananger.Services;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.HttpsPolicy;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.UI;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -30,12 +34,42 @@ namespace HostIsle.Web.Hotels
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    this.Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddTransient<IRepository<ApplicationRole>, Repository<ApplicationRole>>();
+            services.AddTransient<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
+            services.AddTransient<IRepository<ApplicationUserRole>, Repository<ApplicationUserRole>>();
+            services.AddTransient<IRepository<Cleaning>, Repository<Cleaning>>();
+            services.AddTransient<IRepository<Damage>, Repository<Damage>>();
+            services.AddTransient<IRepository<Event>, Repository<Event>>();
+            services.AddTransient<IRepository<Feedback>, Repository<Feedback>>();
+            services.AddTransient<IRepository<Hotel>, Repository<Hotel>>();
+            services.AddTransient<IRepository<Request>, Repository<Request>>();
+            services.AddTransient<IRepository<Reservation>, Repository<Reservation>>();
+            services.AddTransient<IRepository<Room>, Repository<Room>>();
+            services.AddTransient<IRepository<Town>, Repository<Town>>();
+            services.AddTransient<IRepository<HotelRole>, Repository<HotelRole>>();
+            services.AddTransient<IRepository<UserHotelRole>, Repository<UserHotelRole>>();
+
+            services.AddScoped<IHotelService, HotelService>();
+            services.AddScoped<Areas.Manager.Services.Interfaces.IRequestService, Areas.Mananger.Services.RequestService>();
+            services.AddScoped<Services.Interfaces.IRequestService, Services.RequestService>();
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<Services.Interfaces.ISignalService, Services.SignalService>();
+            services.AddScoped<Areas.Guest.Services.Interfaces.ISignalService, Areas.Guest.Services.SignalService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<Areas.Guest.Services.Interfaces.ICleaningService, Areas.Guest.Services.CleaningService>();
+            services.AddScoped<Services.Interfaces.ICleaningService, Services.CleaningService>();
+
+            services.AddControllersWithViews();
 
             services.AddRazorPages();
         }

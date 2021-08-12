@@ -1,7 +1,8 @@
-﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
-@model HotelInformationViewModel
+﻿@using HostIsle.Web.ViewModels.Rooms
+@model RoomRegisterViewModel
 @{
     this.Layout = "_LogOutLayout";
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
 }
 <div id="auth">
 
@@ -15,26 +16,26 @@
                             <h3>Добави стая</h3>
                             <p>Моля попълнете тази форма, за да създадете стая.</p>
                         </div>
-                        <form method="post" asp-controller="Rooms" asp-action="Create" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" enctype="multipart/form-data">
+                        <form method="post" asp-controller="Rooms" asp-action="Create" asp-route-id="@String.Concat(data.Hotel.Id, " ", data.Role)" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label>Номер</label>
-                                        <input type="text" asp-for="RoomRegisterViewModel.RoomNumber" class="form-control">
-                                        <span asp-validation-for="RoomRegisterViewModel.RoomNumber" class="text-danger"></span>
+                                        <input type="text" asp-for="RoomNumber" class="form-control">
+                                        <span asp-validation-for="RoomNumber" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label>Етаж</label>
-                                        <input type="number" asp-for="RoomRegisterViewModel.Floor" class="form-control">
-                                        <span asp-validation-for="RoomRegisterViewModel.Floor" class="text-danger"></span>
+                                        <input type="number" asp-for="Floor" class="form-control">
+                                        <span asp-validation-for="Floor" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="room-type">Тип</label>
-                                        <select asp-for="RoomRegisterViewModel.Type"id="room-type" class="form-control">
+                                        <select asp-for="Type" id="room-type" class="form-control">
                                             <option value="" selected disabled hidden>-- Избери тип --</option>
                                             <option value="0">Суит</option>
                                             <option value="1">Студио</option>

@@ -1,6 +1,6 @@
 ﻿namespace HostIsle.Services.Interfaces
 {
-    using HostIsle.Web.Hotels.ViewModels.Reservations;
+    using HostIsle.Web.ViewModels.Reservations;
     using System.Threading.Tasks;
 
     public interface IReservationService

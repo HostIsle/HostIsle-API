@@ -1,6 +1,5 @@
-﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
-@model HotelInformationViewModel
-@{
+﻿@{
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
     this.Layout = "_UsersLayout";
 }
 <div class="main-content container-fluid">
@@ -8,7 +7,7 @@
         <h3>Сигнали</h3>
         <p class="text-subtitle text-muted">Тук може да следите и отбелязвате сигналите като обработени.</p>
     </div>
-    @if (this.Model.Hotel.Feedbacks.Any(s => !s.IsProcessed))
+    @if (data.Hotel.Feedbacks.Any(s => !s.IsProcessed))
     {
         <section>
             <div class="row">
@@ -16,7 +15,7 @@
             </div>
             <br />
             <div class="row row-cols-1 row-cols-md-4 g-4">
-                @foreach (var signal in this.Model.Hotel.Feedbacks.Where(s => !s.IsProcessed))
+                @foreach (var signal in data.Hotel.Feedbacks.Where(s => !s.IsProcessed))
                 {
                     <div class="col">
                         <div class="card h-100">
@@ -40,7 +39,7 @@
 
     <br />
 
-    @if (this.Model.Hotel.Feedbacks.Any(s => s.IsProcessed))
+    @if (data.Hotel.Feedbacks.Any(s => s.IsProcessed))
     {
         <section>
             <div class="row">
@@ -48,7 +47,7 @@
             </div>
             <br />
             <div class="row row-cols-1 row-cols-md-4 g-4">
-                @foreach (var signal in this.Model.Hotel.Feedbacks.Where(s => s.IsProcessed))
+                @foreach (var signal in data.Hotel.Feedbacks.Where(s => s.IsProcessed))
                 {
                     <div class="col">
                         <div class="card h-100">
@@ -59,7 +58,7 @@
                                 <p class="card-text">Обработено от @signal.ProcessedByEmployee.FirstName @signal.ProcessedByEmployee.LastName</p>
                                 <p class="card-text">@signal.Content</p>
                             </div>
-                            <form asp-controller="Signals" asp-action="Delete" asp-route-id="@String.Concat(signal.Id, " ", this.Model.Role)" method="post">
+                            <form asp-controller="Signals" asp-action="Delete" asp-route-id="@String.Concat(signal.Id, " ", data.Role)" method="post">
                                 <input type="submit" value="Изтрий" class="btn btn-default" />
                             </form>
                             <br />

@@ -6,12 +6,16 @@
 
   <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" Version="1.15.2" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HostIsle.Data.Models.Hotels\HostIsle.Data.Models.Hotels.csproj" />
     <ProjectReference Include="..\HostIsle.Data\HostIsle.Data.csproj" />
-    <ProjectReference Include="..\HostIsle.Web.Hotels\HostIsle.Web.Hotels.csproj" />
+    <ProjectReference Include="..\HostIsle.Web.ViewModels\HostIsle.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

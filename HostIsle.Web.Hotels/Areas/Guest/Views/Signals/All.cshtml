@@ -1,4 +1,9 @@
-﻿<div class="main-content container-fluid">
+﻿@using HostIsle.Web.Hotels.Areas.Guest.ViewModels.Signals
+@model CreateSignalViewModel
+@{
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
+}
+<div class="main-content container-fluid">
     <div class="page-title">
         <h3>Сигнали</h3>
         <p class="text-subtitle text-muted">Тук може да подадете сигнали за нарушения и неизправности.</p>
@@ -11,14 +16,14 @@
                         Подай сигнал
                     </div>
                     <div class="card-body">
-                        <form method="post" asp-controller="Signals" asp-action="Create" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)" id="signal-form">
+                        <form method="post" asp-controller="Signals" asp-action="Create" asp-route-id="@String.Concat(data.Hotel.Id, " ", data.Role)" id="signal-form">
                             <div class="form-group mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Заглавие</label>
-                                <textarea asp-for="CreateSignalViewModel.Title" class="form-control" id="exampleFormControlTextarea1" form="signal-form" rows="1" placeholder="Кратко заглавие..." maxlength="30" style="resize: none;"></textarea>
+                                <textarea asp-for="Title" class="form-control" id="exampleFormControlTextarea1" form="signal-form" rows="1" placeholder="Кратко заглавие..." maxlength="30" style="resize: none;"></textarea>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Описание</label>
-                                <textarea asp-for="CreateSignalViewModel.Description" class="form-control" id="exampleFormControlTextarea1" form="signal-form" rows="3" placeholder="Опишете сигнала, а ние ще се свържем с Вас..."></textarea>
+                                <textarea asp-for="Description" class="form-control" id="exampleFormControlTextarea1" form="signal-form" rows="3" placeholder="Опишете сигнала, а ние ще се свържем с Вас..."></textarea>
                             </div>
                             <div class="clearfix">
                                 <button type="submit" class="btn btn-primary float-right">Изпрати</button>
@@ -46,7 +51,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var signal in this.Model.Hotel.Feedbacks.Where(s => s.Date <= this.Model.Reservation.EndDate && s.Date >= this.Model.Reservation.StartDate && s.Guest.Id == this.Model.User.Id))
+                                    @foreach (var signal in data.Hotel.Feedbacks.Where(s => s.Date <= data.Reservation.EndDate && s.Date >= data.Reservation.StartDate && s.Guest.Id == data.User.Id))
                                     {
                                         <tr>
                                             <td class="text-bold-500">@signal.Title</td>

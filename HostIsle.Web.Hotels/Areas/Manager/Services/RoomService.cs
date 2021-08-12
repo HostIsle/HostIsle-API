@@ -5,7 +5,7 @@
     using HostIsle.Data;
     using HostIsle.Data.Models.Hotels;
     using HostIsle.Web.Hotels.Areas.Manager.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Web.ViewModels.Rooms;
 
     public class RoomService : IRoomService
     {
@@ -16,15 +16,15 @@
             this.roomRepo = roomRepo;
         }
 
-        public async Task CreateAsync(HotelInformationViewModel model, string id)
+        public async Task CreateAsync(RoomRegisterViewModel model, string id)
         {
             var hotelId = id.Split()[0];
 
             var room = new Room()
             {
-                RoomNumber = model.RoomRegisterViewModel.RoomNumber,
-                Floor = model.RoomRegisterViewModel.Floor,
-                RoomType = model.RoomRegisterViewModel.Type,
+                RoomNumber = model.RoomNumber,
+                Floor = model.Floor,
+                RoomType = model.Type,
                 HotelId = hotelId,
             };
 

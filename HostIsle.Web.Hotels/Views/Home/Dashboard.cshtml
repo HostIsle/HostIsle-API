@@ -1,20 +1,19 @@
-﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
-@model GetHotelsViewModel
+﻿@using HostIsle.Data.Models.Hotels
+@using HostIsle.Web.ViewModels.Hotels
 @{
     this.Layout = "_LoggedLayout";
     var httpContext = new HttpContextAccessor();
-    var username = httpContext.HttpContext.User.Identity.Name;
+    var hotels = (List<HotelRenderViewModel>)this.ViewBag.UserHotels;
 }
 
 <div class="main-content container-fluid">
     <div class="page-title">
         <h3>Моите хотели</h3>
-        <h3>@username</h3>
         <p class="text-subtitle text-muted">Това са всички хотели, към които сте свързани:</p>
     </div>
     <section class="section">
         <div class="row mb-2">
-            @foreach (var item in Model.RenderedHotels)
+            @foreach (var item in hotels)
             {
                 var role = item.Role switch
                 {

@@ -1,7 +1,6 @@
 ﻿@using HostIsle.Data.Models.Hotels.Enums
-@using HostIsle.Web.Hotels.ViewModels.Hotels
-@model HotelInformationViewModel
 @{
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
     this.Layout = "_UsersLayout";
 }
 <div class="main-content container-fluid">
@@ -13,7 +12,7 @@
         </p>
     </div>
     <div class="row">
-        @if (this.Model.Cleanings.Any(c => c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy")))
+        @if (data.Cleanings.Any(c => c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy")))
         {
             <div class="card">
                 <div class="card-header">
@@ -23,18 +22,18 @@
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                @foreach (var floor in this.Model.Floors.OrderBy(f => f))
+                                @foreach (var floor in data.Floors.OrderBy(f => f))
                                 {
                                     <li class="nav-item" role="presentation">
-                                        <a class="nav-link @if (floor == this.Model.Floors.Min()){@Html.Raw("active")}" id="floor-@floor-tab" data-toggle="tab" href="#floor-@floor"
-                                           role="tab" aria-controls="@floor" aria-selected="@Html.Raw(floor == this.Model.Floors.Min() ? "true" : "false")">@floor етаж</a>
+                                        <a class="nav-link @if (floor == data.Floors.Min()){@Html.Raw("active")}" id="floor-@floor-tab" data-toggle="tab" href="#floor-@floor"
+                                           role="tab" aria-controls="@floor" aria-selected="@Html.Raw(floor == data.Floors.Min() ? "true" : "false")">@floor етаж</a>
                                     </li>
                                 }
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                @foreach (var floor in this.Model.Floors.OrderBy(f => f))
+                                @foreach (var floor in data.Floors.OrderBy(f => f))
                                 {
-                                    <div class="tab-pane fade @if (floor == this.Model.Floors.Min()){@Html.Raw("show active")}" id="floor-@floor" role="tabpanel"
+                                    <div class="tab-pane fade @if (floor == data.Floors.Min()){@Html.Raw("show active")}" id="floor-@floor" role="tabpanel"
                                          aria-labelledby="@floor-tab">
                                         <div class="table-responsive">
                                             <table class="table table-hover mb-0">
@@ -48,7 +47,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (var cleaning in this.Model.Cleanings.Where(c => c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy") && c.Room.Floor == floor && c.Cleaner == null))
+                                                    @foreach (var cleaning in data.Cleanings.Where(c => c.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy") && c.Room.Floor == floor && c.Cleaner == null))
                                                     {
                                                         var isBusy = @cleaning.Room.IsBusy ? "Да" : "Не";
 
@@ -77,9 +76,9 @@
 
                                                                 <div class="dropdown-menu" aria-labelledby="@cleaning.Id">
                                                                     @{
-                                                                        foreach (var cleaner in this.Model.Cleaners)
+                                                                        foreach (var cleaner in data.Cleaners)
                                                                         {
-                                                                            <form asp-controller="Cleanings" asp-action="Assign" asp-route-id="@String.Concat(cleaning.Id, " ", cleaner.User.Id, " ", this.Model.Role)">
+                                                                            <form asp-controller="Cleanings" asp-action="Assign" asp-route-id="@String.Concat(cleaning.Id, " ", cleaner.User.Id, " ", data.Role)">
                                                                                 <button type="submit" class="dropdown-item">@cleaner.User.FirstName @cleaner.User.LastName</button>
                                                                             </form>
                                                                         }

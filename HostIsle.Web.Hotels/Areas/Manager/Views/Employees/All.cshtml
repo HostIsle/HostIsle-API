@@ -1,5 +1,6 @@
-﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
-@model HotelInformationViewModel
+﻿@{ 
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
+}
 <div class="main-content container-fluid">
     <div class="page-title">
         <div class="row">
@@ -30,7 +31,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var cleaner in this.Model.Cleaners)
+                            @foreach (var cleaner in data.Cleaners)
                             {
                                 <tr>
                                     <td>
@@ -45,7 +46,7 @@
                                 </tr>
                             }
 
-                            @foreach (var receptionist in this.Model.Receptionists)
+                            @foreach (var receptionist in data.Receptionists)
                             {
                                 <tr>
                                     <td>

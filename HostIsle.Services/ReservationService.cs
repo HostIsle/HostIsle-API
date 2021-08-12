@@ -11,7 +11,7 @@ namespace HostIsle.Services
     using HostIsle.Data.Models.Hotels;
     using HostIsle.Data.Models.Hotels.Enums;
     using HostIsle.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Reservations;
+    using HostIsle.Web.ViewModels.Reservations;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
 

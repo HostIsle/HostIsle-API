@@ -1,7 +1,7 @@
 ﻿namespace HostIsle.Web.Hotels.Areas.Receptionist.Controllers
 {
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.Services.Interfaces;
+    using HostIsle.Services.Interfaces;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -19,8 +19,14 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> All(string id, string returnedId) =>
-            this.View("~/Views/Signals/All.cshtml", await this.hotelService.LoadCurrentHotelAsync(id == null ? returnedId : id));
+        public async Task<IActionResult> All(string id, string returnedId)
+        {
+            var model = await this.hotelService.LoadCurrentHotelAsync(id ?? returnedId);
+
+            this.ViewBag.Model = model;
+
+            return this.View("~/Views/Signals/All.cshtml");
+        }
 
         [HttpPost]
         public async Task<IActionResult> Proccess(string id)

@@ -5,8 +5,8 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Services.Interfaces;
+    using HostIsle.Web.Hotels.Areas.Guest.ViewModels.Signals;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -25,13 +25,19 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> All(string id, string returnedId) =>
-            this.View(await this.hotelService.LoadCurrentHotelAsync(id == null ? returnedId : id));
+        public async Task<IActionResult> All(string id, string returnedId)
+        {
+            var model = await this.hotelService.LoadCurrentHotelAsync(id ?? returnedId);
+
+            this.ViewBag.Model = model;
+
+            return this.View();
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Create(HotelInformationViewModel model, string id)
+        public async Task<IActionResult> Create(CreateSignalViewModel model, string id)
         {
-            var hotelId = await this.signalService.CreateAsync(model.CreateSignalViewModel, id);
+            var hotelId = await this.signalService.CreateAsync(model, id);
 
             return this.RedirectToAction(
                 "All",

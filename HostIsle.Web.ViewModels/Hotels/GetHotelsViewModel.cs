@@ -1,4 +1,4 @@
-﻿namespace HostIsle.Web.Hotels.ViewModels.Hotels
+﻿namespace HostIsle.Web.ViewModels.Hotels
 {
     using System.Collections.Generic;
     using HostIsle.Data.Models.Hotels;

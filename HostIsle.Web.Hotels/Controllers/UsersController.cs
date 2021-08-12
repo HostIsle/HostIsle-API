@@ -1,8 +1,9 @@
 ﻿namespace HostIsle.Web.Hotels.Controllers
 {
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Services.Interfaces;
+    using HostIsle.Web.ViewModels.Hotels;
+using HostIsle.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -34,17 +35,17 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(HotelInformationViewModel model)
+        public async Task<IActionResult> Edit(UserProfileViewModel model)
         {
-            await this.userService.EditAsync(model.UserProfileViewModel);
+            await this.userService.EditAsync(model);
 
             return this.Redirect("/Home/Index");
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangePhoto(HotelInformationViewModel model)
+        public async Task<IActionResult> ChangePhoto(UserProfileViewModel model)
         {
-            await this.userService.ChangePhotoAsync(model.UserProfileViewModel);
+            await this.userService.ChangePhotoAsync(model);
 
             return this.Redirect("/Home/Index");
         }

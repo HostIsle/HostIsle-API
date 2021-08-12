@@ -6,7 +6,7 @@
     using HostIsle.Data;
     using HostIsle.Data.Models.Hotels;
     using HostIsle.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Web.ViewModels.Hotels;
     using Microsoft.AspNetCore.Http;
 
     public class RequestService : IRequestService

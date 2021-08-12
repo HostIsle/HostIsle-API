@@ -1,6 +1,5 @@
-﻿@using HostIsle.Web.Hotels.ViewModels.Hotels
-@model HotelInformationViewModel
-@{
+﻿@{
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
     this.Layout = "_UsersLayout";
 }
 <div class="main-content container-fluid">
@@ -9,7 +8,7 @@
         <p class="text-subtitle text-muted">Тук може да видите всички събития.</p>
     </div>
 
-    @if (this.Model.Hotel.Events.Any(e => e.Date >= DateTime.Now))
+    @if (data.Hotel.Events.Any(e => e.Date >= DateTime.Now))
     {
         <section>
             <div class="row">
@@ -17,7 +16,7 @@
             </div>
             <br />
             <div class="row row-cols-1 row-cols-md-4 g-4">
-                @foreach (var item in this.Model.Hotel.Events.Where(e => e.Date >= DateTime.Now))
+                @foreach (var item in data.Hotel.Events.Where(e => e.Date >= DateTime.Now))
                 {
                     var zeroMinute = item.Date.Minute == 0 ? "0" : string.Empty;
                     var zeroHour = item.Date.Hour < 10 ? "0" : string.Empty;
@@ -33,9 +32,9 @@
                                 <h6 class="card-subtitle mb-2 text-muted">@hours:@minutes</h6>
                                 <p class="card-text">@item.Description</p>
                             </div>
-                            @if (this.Model.Role != "Guest")
+                            @if (data.Role != "Guest")
                             {
-                                <form asp-controller="Events" asp-action="Delete" asp-route-id="@String.Concat(item.Id, " ", this.Model.Role)" method="post">
+                                <form asp-controller="Events" asp-action="Delete" asp-route-id="@String.Concat(item.Id, " ", data.Role)" method="post">
                                     <input type="submit" value="Изтрий" class="btn btn-default" />
                                 </form>
                             }
@@ -49,7 +48,7 @@
     }
 
 
-    @if (this.Model.Hotel.Events.Any(e => e.Date < DateTime.Now))
+    @if (data.Hotel.Events.Any(e => e.Date < DateTime.Now))
     {
         <section>
             <div class="row">
@@ -57,7 +56,7 @@
             </div>
             <br />
             <div class="row row-cols-1 row-cols-md-4 g-4">
-                @foreach (var item in this.Model.Hotel.Events.Where(e => e.Date < DateTime.Now))
+                @foreach (var item in data.Hotel.Events.Where(e => e.Date < DateTime.Now))
                 {
                     var zeroMinute = item.Date.Minute == 0 ? "0" : string.Empty;
                     var zeroHour = item.Date.Hour < 10 ? "0" : string.Empty;
@@ -73,9 +72,9 @@
                                 <h6 class="card-subtitle mb-2 text-muted">@hours:@minutes</h6>
                                 <p class="card-text">@item.Description</p>
                             </div>
-                            @if (this.Model.Role != "Guest")
+                            @if (data.Role != "Guest")
                             {
-                                <form asp-controller="Events" asp-action="Delete" asp-route-id="@String.Concat(item.Id, " ", this.Model.Role)" method="post">
+                                <form asp-controller="Events" asp-action="Delete" asp-route-id="@String.Concat(item.Id, " ", data.Role)" method="post">
                                     <input type="submit" value="Изтрий" class="btn btn-default" />
                                 </form>
                             }

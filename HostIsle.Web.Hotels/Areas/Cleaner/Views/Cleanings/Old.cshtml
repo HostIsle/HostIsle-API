@@ -1,6 +1,7 @@
 ﻿@using HostIsle.Data.Models.Hotels.Enums
-@{
-    var cleanings = this.Model.Cleanings.Where(cleaning => cleaning.Status == CleaningStatus.Done && cleaning.Room.Hotel.Id == this.Model.Hotel.Id && cleaning.Cleaner?.Id == this.User.FindFirst("Id").Value).ToList();
+@{ 
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
+    var cleanings = data.Cleanings.Where(cleaning => cleaning.Status == CleaningStatus.Done && cleaning.Room.Hotel.Id == this.Model.Hotel.Id && cleaning.Cleaner?.Id == this.User.FindFirst("Id").Value).ToList();
 }
 <div class="main-content container-fluid">
     <div class="page-title">

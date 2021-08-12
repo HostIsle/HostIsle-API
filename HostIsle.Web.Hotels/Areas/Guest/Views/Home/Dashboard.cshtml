@@ -1,11 +1,12 @@
 ﻿@using HostIsle.Data.Models.Hotels.Enums
 @{
-    var cleanings = this.Model.Reservation.Room.Cleanings.Where(cleaning => cleaning.Date >= this.Model.Reservation.StartDate && cleaning.Date <= this.Model.Reservation.EndDate).ToList();
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
+    var cleanings = data.Reservation.Room.Cleanings.Where(cleaning => cleaning.Date >= data.Reservation.StartDate && cleaning.Date <= data.Reservation.EndDate).ToList();
 }
 <div class="main-content container-fluid">
     <div class="page-title">
-        <h3>@this.Model.Hotel.Name, @this.Model.Hotel.Town.Name</h3>
-        <p class="text-subtitle text-muted">@this.Model.User.FirstName @this.Model.User.LastName @this.Model.Reservation.StartDate.Day - @this.Model.Reservation.EndDate.Date.Date.ToString("dd.MM.yyyy")</p>
+        <h3>@data.Hotel.Name, @data.Hotel.Town.Name</h3>
+        <p class="text-subtitle text-muted">@data.User.FirstName @data.User.LastName @data.Reservation.StartDate.Day - @data.Reservation.EndDate.Date.Date.ToString("dd.MM.yyyy")</p>
     </div>
     <section class="section">
         <div class="row mb-2">
@@ -17,7 +18,7 @@
                                 <div class='px-3 py-3 d-flex justify-content-between'>
                                     <h3 class='card-title'>ДЕН</h3>
                                     <div class="card-right d-flex align-items-center">
-                                        <p>@((DateTime.Now.AddDays(1) - this.Model.Reservation.StartDate).Days) </p>
+                                        <p>@((DateTime.Now.AddDays(1) - data.Reservation.StartDate).Days) </p>
                                     </div>
                                 </div>
                             </div>
@@ -42,14 +43,14 @@
                 </a>
             </div>
             <div class="col-12 col-md-3">
-                <a asp-controller="Signals" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)">
+                <a asp-controller="Signals" asp-action="All" asp-route-id="@String.Concat(data.Hotel.Id, " ", data.Role)">
                     <div class="card card-statistic">
                         <div class="card-body p-0">
                             <div class="d-flex flex-column">
                                 <div class='px-3 py-3 d-flex justify-content-between'>
                                     <h3 class='card-title'>СИГНАЛИ</h3>
                                     <div class="card-right d-flex align-items-center">
-                                        <p>@this.Model.Reservation.Feedbacks.Count </p>
+                                        <p>@data.Reservation.Feedbacks.Count </p>
                                     </div>
                                 </div>
                             </div>
@@ -58,14 +59,14 @@
                 </a>
             </div>
             <div class="col-12 col-md-3">
-                <a asp-controller="Events" asp-action="All" asp-route-id="@String.Concat(this.Model.Hotel.Id, " ", this.Model.Role)">
+                <a asp-controller="Events" asp-action="All" asp-route-id="@String.Concat(data.Hotel.Id, " ", data.Role)">
                     <div class="card card-statistic">
                         <div class="card-body p-0">
                             <div class="d-flex flex-column">
                                 <div class='px-3 py-3 d-flex justify-content-between'>
                                     <h3 class='card-title'>СЪБИТИЯ</h3>
                                     <div class="card-right d-flex align-items-center">
-                                        <p>@this.Model.Hotel.Events.Count</p>
+                                        <p>@data.Hotel.Events.Count</p>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +112,7 @@
                                             <i class="bx bx-x d-block d-sm-none"></i>
                                             <span class="d-none d-sm-block">Затвори</span>
                                         </button>
-                                        <form method="post" asp-controller="Cleanings" asp-action="Skip" asp-route-id="@this.Model.Reservation.RoomId">
+                                        <form method="post" asp-controller="Cleanings" asp-action="Skip" asp-route-id="@data.Reservation.RoomId">
                                                 <button type="submit" class="btn btn-primary float-right">Прескочи</button>
                                         </form>
                                     </div>

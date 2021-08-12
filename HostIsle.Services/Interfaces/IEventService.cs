@@ -1,11 +1,11 @@
 ﻿namespace HostIsle.Services.Interfaces
 {
+    using HostIsle.Web.ViewModels.Events;
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
 
     public interface IEventService
     {
-        public Task CreateAsync(HotelInformationViewModel model, string id);
+        public Task CreateAsync(CreateEventViewModel model, string id);
 
         public Task<string> DeleteAsync(string id);
     }

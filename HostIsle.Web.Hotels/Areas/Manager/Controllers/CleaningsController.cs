@@ -5,8 +5,8 @@
 namespace HostIsle.Web.Hotels.Areas.Mananger.Controllers
 {
     using System.Threading.Tasks;
-    using HostIsle.Web.Hotels.Services.Interfaces;
-    using HostIsle.Web.Hotels.ViewModels.Hotels;
+    using HostIsle.Services.Interfaces;
+using HostIsle.Web.ViewModels.Cleanings;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -24,17 +24,29 @@ namespace HostIsle.Web.Hotels.Areas.Mananger.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> All(string id, string returnedId) =>
-           this.View("~/Views/Cleanings/All.cshtml", await this.hotelService.LoadCurrentHotelAsync(id ?? returnedId));
+        public async Task<IActionResult> All(string id, string returnedId)
+        {
+            var model = await this.hotelService.LoadCurrentHotelAsync(id ?? returnedId);
+
+            this.ViewBag.Model = model;
+
+            return this.View("~/Views/Cleanings/All.cshtml");
+        }
 
         [HttpGet]
-        public async Task<IActionResult> Add(string id, string returnedId) =>
-            this.View("~/Views/Cleanings/Add.cshtml", await this.hotelService.LoadCurrentHotelAsync(id ?? returnedId));
+        public async Task<IActionResult> Add(string id, string returnedId)
+        {
+            var model = await this.hotelService.LoadCurrentHotelAsync(id ?? returnedId);
+
+            this.ViewBag.Model = model;
+
+            return this.View("~/Views/Cleanings/Add.cshtml");
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Create(HotelInformationViewModel model, string id)
+        public async Task<IActionResult> Create(CreateCleaningViewModel model, string id)
         {
-            await this.cleaningService.CreateAsync(model.CreateCleaningViewModel, id);
+            await this.cleaningService.CreateAsync(model, id);
 
             return this.RedirectToAction("All", "Cleanings", new { returnedId = id });
         }

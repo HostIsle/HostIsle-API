@@ -3,17 +3,9 @@
 // Copyright (c) HotelCollab. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace HostIsle.Web.Hotels.ViewModels.Hotels
+namespace HostIsle.Web.ViewModels.Hotels
 {
     using System.Collections.Generic;
-    using HostIsle.Web.Hotels.Areas.Cleaner.ViewModels;
-    using HostIsle.Web.Hotels.Areas.Guest.ViewModels.Signals;
-    using HostIsle.Web.Hotels.Areas.Manager.ViewModels;
-    using HostIsle.Web.Hotels.Areas.Manager.ViewModels.Employees;
-    using HostIsle.Web.Hotels.Areas.Manager.ViewModels.Room;
-    using HostIsle.Web.Hotels.ViewModels.Cleanings;
-    using HostIsle.Web.Hotels.ViewModels.Reservations;
-    using HostIsle.Web.Hotels.ViewModels.User;
     using HostIsle.Data.Models.Hotels;
 
     /// <summary>
@@ -47,23 +39,5 @@ namespace HostIsle.Web.Hotels.ViewModels.Hotels
         public ApplicationUser User { get; set; }
 
         public ApplicationUser CurrentUser { get; set; }
-
-        public AddReservationViewModel AddReservationViewModel { get; set; }
-
-        public RoomRegisterViewModel RoomRegisterViewModel { get; set; }
-
-        public CreateEventViewModel CreateEventViewModel { get; set; }
-
-        public CreateSignalViewModel CreateSignalViewModel { get; set; }
-
-        public EditUserViewModel EditUserViewModel { get; set; }
-
-        public EditReservationViewModel EditReservationViewModel { get; set; }
-
-        public CreateCleaningViewModel CreateCleaningViewModel { get; set; }
-
-        public CleanRoomViewModel CleanRoomViewModel { get; set; }
-
-        public UserProfileViewModel UserProfileViewModel { get; set; }
     }
 }

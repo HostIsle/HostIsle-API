@@ -1,6 +1,11 @@
-﻿<div class="main-content container-fluid">
+﻿@using HostIsle.Web.ViewModels.Users
+@model EditUserViewModel
+@{ 
+    var data = (HotelInformationViewModel)this.ViewBag.Model;
+}
+<div class="main-content container-fluid">
     <div class="page-title">
-        <h3>@this.Model.User.FirstName @this.Model.User.LastName - @this.Model.EmployeeRole </h3>
+        <h3>@data.User.FirstName @data.User.LastName - @data.EmployeeRole </h3>
         <p class="text-subtitle text-muted">Тук можете да следите и управлявате профила на конкретния служител.</p>
     </div>
     <section id="multiple-column-form">
@@ -9,18 +14,18 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form method="post" asp-controller="Employees" asp-action="Update" asp-route-id="@string.Concat(this.Model.User.Id, " ", this.Model.Hotel.Id, " ", this.Model.Role)" class="form">
+                            <form method="post" asp-controller="Employees" asp-action="Update" asp-route-id="@string.Concat(data.User.Id, " ", data.Hotel.Id, " ", data.Role)" class="form">
                                 <div class="row">
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Име</label>
-                                            <input asp-for="EditUserViewModel.FirstName" type="text" class="form-control" id="firstName" placeholder="@this.Model.User.FirstName" disabled>
+                                            <input asp-for="FirstName" type="text" class="form-control" id="firstName" placeholder="@data.User.FirstName" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Фамилия</label>
-                                            <input asp-for="EditUserViewModel.LastName" type="text" class="form-control" id="lastName" placeholder="@this.Model.User.LastName" disabled>
+                                            <input asp-for="LastName" type="text" class="form-control" id="lastName" placeholder="@data.User.LastName" disabled>
                                         </div>
                                     </div>
                                 </div>

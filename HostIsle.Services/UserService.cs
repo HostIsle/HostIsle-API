@@ -7,8 +7,7 @@
     using HostIsle.Data;
     using HostIsle.Data.Models.Hotels;
     using HostIsle.Services.Interfaces;
-    using HostIsle.Web.Hotels.Areas.Manager.ViewModels.Employees;
-    using HostIsle.Web.Hotels.ViewModels.User;
+    using HostIsle.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Http;
 
     public class UserService : IUserService
