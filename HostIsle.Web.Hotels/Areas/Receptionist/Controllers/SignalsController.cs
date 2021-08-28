@@ -12,12 +12,23 @@
         private readonly IHotelService hotelService;
         private readonly ISignalService signalService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SignalsController"/> class.
+        /// </summary>
+        /// <param name="hotelService"></param>
+        /// <param name="signalService"></param>
         public SignalsController(IHotelService hotelService, ISignalService signalService)
         {
             this.hotelService = hotelService;
             this.signalService = signalService;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="returnedId"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> All(string id, string returnedId)
         {
@@ -28,6 +39,11 @@
             return this.View("~/Views/Signals/All.cshtml");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Proccess(string id)
         {
@@ -36,6 +52,11 @@
             return this.RedirectToAction("All", "Signals", new { returnedId = hotelId });
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {

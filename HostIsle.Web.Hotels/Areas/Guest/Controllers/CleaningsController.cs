@@ -14,11 +14,20 @@
     {
         private readonly ICleaningService cleaningService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CleaningsController"/> class.
+        /// </summary>
+        /// <param name="cleaningService"></param>
         public CleaningsController(ICleaningService cleaningService)
         {
             this.cleaningService = cleaningService;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Skip(string id)
         {

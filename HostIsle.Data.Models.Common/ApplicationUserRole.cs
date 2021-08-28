@@ -1,11 +1,25 @@
-﻿namespace HostIsle.Data.Models.Hotels
+﻿using System;
+
+namespace HostIsle.Data.Models.Common
 {
     using Microsoft.AspNetCore.Identity;
 
     public class ApplicationUserRole : IdentityUserRole<string>
     {
-        public string HotelId { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationUserRole"/> class.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        public ApplicationUserRole(string propertyId)
+        {
+            this.Id = Guid.NewGuid().ToString();
+            this.PropertyId = propertyId;
+        }
 
-        public virtual Hotel Hotel { get; set; }
+        public string Id { get; set; }
+
+        public string PropertyId { get; set; }
+
+        public Property Property { get; set; }
     }
 }

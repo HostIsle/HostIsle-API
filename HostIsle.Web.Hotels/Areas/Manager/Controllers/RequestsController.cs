@@ -12,12 +12,23 @@
         private readonly Manager.Services.Interfaces.IRequestService requestService;
         private readonly IHotelService hotelService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RequestsController"/> class.
+        /// </summary>
+        /// <param name="requestService"></param>
+        /// <param name="hotelService"></param>
         public RequestsController(Manager.Services.Interfaces.IRequestService requestService, IHotelService hotelService)
         {
             this.requestService = requestService;
             this.hotelService = hotelService;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="returnedId"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> All(string id, string returnedId)
         {
@@ -28,6 +39,11 @@
             return this.View();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Accept(string id) =>
             this.RedirectToAction(
@@ -35,6 +51,11 @@
                 "Requests",
                 new { returnedId = await this.requestService.AcceptAsync(id) });
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Delete(string id) =>
             this.RedirectToAction(

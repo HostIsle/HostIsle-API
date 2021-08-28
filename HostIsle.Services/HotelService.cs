@@ -26,6 +26,18 @@
         private readonly IRepository<ApplicationRole> roleRepo;
         private readonly IHttpContextAccessor httpContextAccessor;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HotelService"/> class.
+        /// </summary>
+        /// <param name="roomRepo"></param>
+        /// <param name="cleaningRepo"></param>
+        /// <param name="userRepo"></param>
+        /// <param name="reservationRepo"></param>
+        /// <param name="userHotelRoleRepo"></param>
+        /// <param name="hotelRepo"></param>
+        /// <param name="townRepo"></param>
+        /// <param name="roleRepo"></param>
+        /// <param name="httpContextAccessor"></param>
         public HotelService(IRepository<Room> roomRepo, IRepository<Cleaning> cleaningRepo, IRepository<ApplicationUser> userRepo, IRepository<Reservation> reservationRepo, IRepository<UserHotelRole> userHotelRoleRepo, IRepository<Hotel> hotelRepo, IRepository<Town> townRepo, IRepository<ApplicationRole> roleRepo, IHttpContextAccessor httpContextAccessor)
         {
             this.roomRepo = roomRepo;
@@ -91,7 +103,7 @@
                 town = towns.FirstOrDefault();
             }
 
-            var hotel = new Hotel(imageUrl)
+            var hotel = new Hotel()
             {
                 Name = model.Name,
                 PhoneNumber = model.PhoneNumber,
@@ -99,7 +111,6 @@
                 CleaningPeriod = model.CleaningPeriod,
                 TownId = town.Id,
             };
-
             town.Hotels.Add(hotel);
 
             foreach (var role in await this.roleRepo.GetAllAsync())

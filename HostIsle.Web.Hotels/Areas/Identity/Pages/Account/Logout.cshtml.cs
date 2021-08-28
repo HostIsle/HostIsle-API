@@ -17,6 +17,11 @@ namespace HostIsle.Web.Hotels.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogoutModel"/> class.
+        /// </summary>
+        /// <param name="signInManager"></param>
+        /// <param name="logger"></param>
         public LogoutModel(SignInManager<ApplicationUser> signInManager, ILogger<LogoutModel> logger)
         {
             _signInManager = signInManager;
@@ -27,6 +32,11 @@ namespace HostIsle.Web.Hotels.Areas.Identity.Pages.Account
         {
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();

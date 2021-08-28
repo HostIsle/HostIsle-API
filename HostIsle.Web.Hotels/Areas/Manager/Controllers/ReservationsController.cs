@@ -13,12 +13,23 @@
         private readonly IHotelService hotelService;
         private readonly IReservationService reservationService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReservationsController"/> class.
+        /// </summary>
+        /// <param name="hotelService"></param>
+        /// <param name="reservationService"></param>
         public ReservationsController(IHotelService hotelService, IReservationService reservationService)
         {
             this.hotelService = hotelService;
             this.reservationService = reservationService;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="returnedId"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> All(string id, string returnedId)
         {
@@ -29,6 +40,11 @@
             return this.View("~/Views/Reservations/All.cshtml");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> Add(string id)
         {
@@ -39,6 +55,11 @@
             return this.View("~/Views/Reservations/Add.cshtml");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> Overview(string id)
         {
@@ -49,6 +70,12 @@
             return this.View("~/Views/Reservations/Overview.cshtml");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Create(AddReservationViewModel model, string id)
         {
@@ -57,6 +84,12 @@
             return this.RedirectToAction("All", "Reservations", new { returnedId = id });
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Update(EditReservationViewModel model, string id)
         {
@@ -65,6 +98,11 @@
             return this.RedirectToAction("All", "Reservations", new { returnedId = hotelId });
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
@@ -73,6 +111,11 @@
             return this.RedirectToAction("All", "Reservations", new { returnedId = hotelId });
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Free(string id)
         {

@@ -16,6 +16,15 @@
         private readonly IRepository<ApplicationUser> userRepo;
         private readonly IRepository<ApplicationRole> roleRepo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RequestService"/> class.
+        /// </summary>
+        /// <param name="hotelRoleRepo"></param>
+        /// <param name="userHotelRoleRepo"></param>
+        /// <param name="userManager"></param>
+        /// <param name="requestRepo"></param>
+        /// <param name="userRepo"></param>
+        /// <param name="roleRepo"></param>
         public RequestService(IRepository<HotelRole> hotelRoleRepo, IRepository<UserHotelRole> userHotelRoleRepo, UserManager<ApplicationUser> userManager, IRepository<Request> requestRepo, IRepository<ApplicationUser> userRepo, IRepository<ApplicationRole> roleRepo)
         {
             this.hotelRoleRepo = hotelRoleRepo;

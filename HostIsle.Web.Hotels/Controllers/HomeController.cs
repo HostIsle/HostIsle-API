@@ -16,12 +16,21 @@ namespace HostIsle.Web.Hotels.Controllers
         private readonly IRepository<Hotel> hotelRepo;
         private readonly IRepository<ApplicationUser> userRepo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeController"/> class.
+        /// </summary>
+        /// <param name="hotelRepo"></param>
+        /// <param name="userRepo"></param>
         public HomeController(IRepository<Hotel> hotelRepo, IRepository<ApplicationUser> userRepo)
         {
             this.hotelRepo = hotelRepo;
             this.userRepo = userRepo;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {

@@ -11,6 +11,10 @@
     {
         private readonly IRepository<Event> eventRepo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventService"/> class.
+        /// </summary>
+        /// <param name="eventRepo"></param>
         public EventService(IRepository<Event> eventRepo)
         {
             this.eventRepo = eventRepo;

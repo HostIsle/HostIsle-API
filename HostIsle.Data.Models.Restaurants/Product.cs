@@ -1,46 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HostIsle.Data.Models.Restaurants
+﻿namespace HostIsle.Data.Models.Restaurants
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using HostIsle.Data.Models.Restaurants.Enums;
+
     public class Product
     {
-        public Product(string name, MenuCategory menuCategory,decimal weight,decimal price)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Product"/> class.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="weight"></param>
+        /// <param name="price"></param>
+        /// <param name="restaurantId"></param>
+        public Product(string name, decimal weight, decimal price, string restaurantId)
         {
+            this.Id = Guid.NewGuid().ToString();
+
             this.Name = name;
-            this.MenuCategoryId = menuCategory.Id;
             this.Weight = weight;
             this.Price = price;
+            this.RestaurantId = restaurantId;
 
+            this.ProductIngredients = new HashSet<ProductIngredient>();
         }
-        public Product()
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Product"/> class.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="imageUrl"></param>
+        /// <param name="weight"></param>
+        /// <param name="price"></param>
+        /// <param name="description"></param>
+        /// <param name="restaurantId"></param>
+        public Product(string name, string imageUrl, decimal weight, decimal price, string description, string restaurantId)
+            : this(name, weight, price, restaurantId)
         {
-
+            this.ImageUrl = imageUrl;
+            this.Description = description;
         }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
-        public string PhotoPath { get; set; }
+        public string ImageUrl { get; set; }
 
-        [Column(TypeName = "decimal(18,4)")]
+        [Required]
         public decimal Weight { get; set; }
 
-        [Column(TypeName = "decimal(18,4)")]
+        [Required]
         public decimal Price { get; set; }
 
+        public ProductType Type { get; set; }
+
+        [MaxLength(150)]
         public string Description { get; set; }
 
-        public int? MenuCategoryId { get; set; }
-        public virtual MenuCategory MenuCategory { get; set; }
+        [Required]
+        public string RestaurantId { get; set; }
 
-        public virtual ICollection<OrderProduct> OrderProducts{ get; set; }
+        public virtual Restaurant Restaurant { get; set; }
 
-        public virtual ICollection<ProductIngredients> ProductIngredients { get; set; }
-
+        public virtual ICollection<ProductIngredient> ProductIngredients { get; set; }
     }
 }

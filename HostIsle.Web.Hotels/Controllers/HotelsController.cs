@@ -11,6 +11,10 @@
     {
         private readonly IHotelService hotelService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HotelsController"/> class.
+        /// </summary>
+        /// <param name="hotelService"></param>
         public HotelsController(IHotelService hotelService)
         {
             this.hotelService = hotelService;
@@ -18,6 +22,11 @@
 
         public IActionResult Add() => this.View();
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Create(HotelRegisterViewModel model)
         {

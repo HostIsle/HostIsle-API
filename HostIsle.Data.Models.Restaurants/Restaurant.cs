@@ -1,82 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HostIsle.Data.Models.Restaurants
+﻿namespace HostIsle.Data.Models.Restaurants
 {
-    public class Restaurant
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using HostIsle.Data.Models.Common;
+
+    public class Restaurant : Property
     {
-        public Restaurant(string name, string phone, int seats,string workTime,string advantages, TypeRestaurant typeRestaurant, Address address)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Restaurant"/> class.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="phoneNumber"></param>
+        /// <param name="type"></param>
+        /// <param name="gallery"></param>
+        /// <param name="locationId"></param>
+        /// <param name="seats"></param>
+        /// <param name="workTime"></param>
+        public Restaurant(string name, string phoneNumber, PropertyType type, List<string> gallery, string locationId, int seats, string workTime)
+            : base(name, phoneNumber, type, gallery, locationId)
         {
-            this.Name = name;
-            this.Phone = phone;
             this.Seats = seats;
             this.WorkTime = workTime;
-            this.Advantages = advantages;
-            this.TypeRestaurant = typeRestaurant;
-            this.Address = address;
-            this.MenuCategories = new HashSet<MenuCategory>();
 
-        }
-        public Restaurant()
-        {
-            this.MenuCategories = new HashSet<MenuCategory>();
+            this.Products = new HashSet<Product>();
         }
 
-        [Key]
-        public int Id { get; set; }
-
         [Required]
-        [MinLength(3)]
-        public string Name { get; set; }
-
-        [Required]
-        public string Phone { get; set; }
-
         [Range(1, int.MaxValue)]
         public int Seats { get; set; }
 
-        public int TypeRestaurantId { get; set; }
-        public virtual TypeRestaurant TypeRestaurant { get; set; }
-
+        [Required]
         public string WorkTime { get; set; }
 
         public string QrCode { get; set; }
 
-        public string Advantages { get; set; }
-
-        public string AdditionalInformation { get; set; }
-
-        public int GaleryImagesCount { get; set; }
-
-        public string IDCard { get; set; }
-
-        public string Lat { get; set; }
-
-        public string Lon { get; set; }
-
-        public string EmployeesId { get; set; }
-
         public virtual ICollection<Order> Orders { get; set; }
 
-        public virtual ICollection<RestaurantCategory> RestaurantCategories { get; set; }
-
-        [Required]
-        public int AddressId { get; set; }
-        public virtual Address Address { get; set; }
-
-        public string UserId { get; set; }
-        public virtual User User { get; set; }
-
-        public bool isRegistrationFinished { get; set; }
-
-        public virtual ICollection<Review> Reviews { get; set; }
-
-        public virtual ICollection<MenuCategory> MenuCategories { get; set; }
-
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
     }
 }

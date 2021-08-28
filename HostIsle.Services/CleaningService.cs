@@ -2,6 +2,8 @@
 // Copyright (c) HotelCollab. All rights reserved.
 // </copyright>
 
+using HostIsle.Data.Models.Common;
+
 namespace HostIsle.Services
 {
     using System;
@@ -21,6 +23,12 @@ namespace HostIsle.Services
         private readonly IRepository<Hotel> hotelRepo;
         private readonly IRepository<Cleaning> cleaningRepo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CleaningService"/> class.
+        /// </summary>
+        /// <param name="userRepo"></param>
+        /// <param name="hotelRepo"></param>
+        /// <param name="cleaningRepo"></param>
         public CleaningService(IRepository<ApplicationUser> userRepo, IRepository<Hotel> hotelRepo, IRepository<Cleaning> cleaningRepo)
         {
             this.userRepo = userRepo;
@@ -50,9 +58,7 @@ namespace HostIsle.Services
 
             cleaning.Status = CleaningStatus.Done;
 
-            cleaning.IsDamaged = model.IsDamaged
-                ? true
-                : false;
+            cleaning.HasDamages = model.IsDamaged;
 
             await this.cleaningRepo.SaveChangesAsync();
 
@@ -66,12 +72,7 @@ namespace HostIsle.Services
 
             var room = (await this.hotelRepo.GetAsync(hotelId)).Rooms.FirstOrDefault(r => r.RoomNumber == model.RoomNumber);
 
-            var cleaning = new Cleaning()
-            {
-                Cleaner = assignTo,
-                Date = model.Date,
-                Room = room,
-            };
+            var cleaning = new Cleaning(model.Date, CleaningStatus.Upcoming, room?.Id, assignTo.Id);
 
             await this.cleaningRepo.AddAsync(cleaning);
             await this.cleaningRepo.SaveChangesAsync();

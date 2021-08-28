@@ -5,9 +5,17 @@
 
     public class Damage
     {
-        public Damage()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Damage"/> class.
+        /// </summary>
+        /// <param name="cleaningId"></param>
+        /// <param name="content"></param>
+        public Damage(string cleaningId, string content)
         {
             this.Id = Guid.NewGuid().ToString();
+
+            this.CleaningId = cleaningId;
+            this.Content = content;
         }
 
         public string Id { get; private set; }
@@ -18,7 +26,6 @@
         public virtual Cleaning Cleaning { get; set; }
 
         [Required]
-        [MinLength(20)]
         [MaxLength(250)]
         public string Content { get; set; }
     }

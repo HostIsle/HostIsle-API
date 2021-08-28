@@ -8,6 +8,11 @@ namespace HostIsle.Web.Controllers
     {
         private readonly ILogger<OidcConfigurationController> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OidcConfigurationController"/> class.
+        /// </summary>
+        /// <param name="clientRequestParametersProvider"></param>
+        /// <param name="logger"></param>
         public OidcConfigurationController(IClientRequestParametersProvider clientRequestParametersProvider, ILogger<OidcConfigurationController> logger)
         {
             ClientRequestParametersProvider = clientRequestParametersProvider;

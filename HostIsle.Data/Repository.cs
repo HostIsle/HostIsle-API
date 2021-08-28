@@ -11,6 +11,10 @@
         private readonly ApplicationDbContext appDbContext;
         private readonly DbSet<T> dbSet;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Repository{T}"/> class.
+        /// </summary>
+        /// <param name="appDbContext"></param>
         public Repository(ApplicationDbContext appDbContext)
         {
             this.appDbContext = appDbContext;

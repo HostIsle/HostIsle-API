@@ -15,6 +15,12 @@ using HostIsle.Web.ViewModels.Users;
         private readonly IHotelService hotelService;
         private readonly IUserService userService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// </summary>
+        /// <param name="requestService"></param>
+        /// <param name="hotelService"></param>
+        /// <param name="userService"></param>
         public UsersController(IRequestService requestService, IHotelService hotelService, IUserService userService)
         {
             this.requestService = requestService;
@@ -22,10 +28,21 @@ using HostIsle.Web.ViewModels.Users;
             this.userService = userService;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="returnedId"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> Profile(string id, string returnedId) =>
             this.View(await this.hotelService.LoadCurrentHotelAsync(id ?? returnedId));
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> CreateRequest(GetHotelsViewModel model)
         {
@@ -34,6 +51,11 @@ using HostIsle.Web.ViewModels.Users;
             return this.Redirect("/Home/Index");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Edit(UserProfileViewModel model)
         {
@@ -42,6 +64,11 @@ using HostIsle.Web.ViewModels.Users;
             return this.Redirect("/Home/Index");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> ChangePhoto(UserProfileViewModel model)
         {

@@ -1,4 +1,6 @@
-﻿namespace HostIsle.Services
+﻿using HostIsle.Data.Models.Common;
+
+namespace HostIsle.Services
 {
     using System.Threading.Tasks;
     using HostIsle.Data;
@@ -8,10 +10,15 @@
 
     public class SignalService : ISignalService
     {
-        private readonly IRepository<Feedback> signalRepo;
+        private readonly IRepository<Signal> signalRepo;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public SignalService(IRepository<Feedback> signalRepo, IHttpContextAccessor httpContextAccessor)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SignalService"/> class.
+        /// </summary>
+        /// <param name="signalRepo"></param>
+        /// <param name="httpContextAccessor"></param>
+        public SignalService(IRepository<Signal> signalRepo, IHttpContextAccessor httpContextAccessor)
         {
             this.signalRepo = signalRepo;
             this.httpContextAccessor = httpContextAccessor;
@@ -24,7 +31,7 @@
 
             var signal = await this.signalRepo.GetAsync(signalId);
 
-            var hotelId = signal.HotelId;
+            var hotelId = signal.Reservation.PropertyId;
 
             this.signalRepo.Delete(signal);
 
@@ -35,14 +42,14 @@
 
         public async Task<string> ProccessAsync(string id)
         {
-            var processedByEmployeeId = this.httpContextAccessor.HttpContext.User.FindFirst("Id").Value;
+            var processedByEmployeeId = this.httpContextAccessor.HttpContext.User.FindFirst("Id")?.Value;
 
             var signalId = id.Split()[0];
             var role = id.Split()[1];
 
             var signal = await this.signalRepo.GetAsync(signalId);
 
-            var hotelId = signal.HotelId;
+            var hotelId = signal.Reservation.PropertyId;
 
             signal.IsProcessed = true;
             signal.ProcessedByEmployeeId = processedByEmployeeId;

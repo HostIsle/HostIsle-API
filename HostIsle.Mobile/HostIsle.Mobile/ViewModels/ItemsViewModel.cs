@@ -1,9 +1,9 @@
-﻿using HostIsle.Mobile.Models;
-using HostIsle.Mobile.Views;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using HostIsle.Mobile.Models;
+using HostIsle.Mobile.Views;
 using Xamarin.Forms;
 
 namespace HostIsle.Mobile.ViewModels
@@ -17,6 +17,9 @@ namespace HostIsle.Mobile.ViewModels
         public Command AddItemCommand { get; }
         public Command<Item> ItemTapped { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ItemsViewModel"/> class.
+        /// </summary>
         public ItemsViewModel()
         {
             Title = "Browse";

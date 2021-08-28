@@ -20,6 +20,11 @@ namespace HostIsle.Web.Hotels.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ForgotPasswordModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="emailSender"></param>
         public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -36,6 +41,10 @@ namespace HostIsle.Web.Hotels.Areas.Identity.Pages.Account
             public string Email { get; set; }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)

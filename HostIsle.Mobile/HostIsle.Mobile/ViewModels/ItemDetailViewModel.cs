@@ -1,7 +1,7 @@
-﻿using HostIsle.Mobile.Models;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using HostIsle.Mobile.Models;
 using Xamarin.Forms;
 
 namespace HostIsle.Mobile.ViewModels

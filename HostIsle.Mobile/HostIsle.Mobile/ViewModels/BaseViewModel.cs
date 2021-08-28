@@ -1,9 +1,9 @@
-﻿using HostIsle.Mobile.Models;
-using HostIsle.Mobile.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using HostIsle.Mobile.Models;
+using HostIsle.Mobile.Services;
 using Xamarin.Forms;
 
 namespace HostIsle.Mobile.ViewModels

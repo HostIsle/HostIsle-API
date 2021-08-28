@@ -13,6 +13,10 @@
     {
         private readonly IRepository<Cleaning> cleaningRepo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CleaningService"/> class.
+        /// </summary>
+        /// <param name="cleaningRepo"></param>
         public CleaningService(IRepository<Cleaning> cleaningRepo)
         {
             this.cleaningRepo = cleaningRepo;

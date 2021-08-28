@@ -1,30 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace HostIsle.Data.Models.Restaurants
+namespace HostIsle.Data.Models.Common
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class Address
     {
-        public Address(string street, Town town)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Address"/> class.
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="townId"></param>
+        public Address(string description, string townId)
         {
-            this.Street = street;
-            this.Town = town;
+            this.Id = Guid.NewGuid().ToString();
+
+            this.Description = description;
+            this.TownId = townId;
+
+            this.Locations = new HashSet<Location>();
+            this.Properties = new HashSet<Property>();
         }
-        public Address()
-        {
 
-        }
-        public int Id { get; set; }
+        public string Id { get; set; }
 
-        public string Street { get; set; }
+        [Required]
+        public string Description { get; set; }
 
-        public int TownId { get; set; }
+        [Required]
+        public string TownId { get; set; }
+
         public virtual Town Town { get; set; }
 
-        public int RestaurantId { get; set; }
-        public virtual Restaurant Restaurant { get; set; }
+        public virtual ICollection<Location> Locations { get; set; }
 
+        public virtual ICollection<Property> Properties { get; set; }
     }
 }

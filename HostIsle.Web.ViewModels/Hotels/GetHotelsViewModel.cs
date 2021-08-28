@@ -5,6 +5,9 @@
 
     public class GetHotelsViewModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetHotelsViewModel"/> class.
+        /// </summary>
         public GetHotelsViewModel()
         {
             this.RenderedHotels = new List<HotelRenderViewModel>();

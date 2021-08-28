@@ -16,6 +16,12 @@
         private readonly IRepository<Reservation> reservationRepo;
         private readonly IRepository<Feedback> signalRepo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SignalService"/> class.
+        /// </summary>
+        /// <param name="httpContextAccessor"></param>
+        /// <param name="reservationRepo"></param>
+        /// <param name="signalRepo"></param>
         public SignalService(IHttpContextAccessor httpContextAccessor, IRepository<Reservation> reservationRepo, IRepository<Feedback> signalRepo)
         {
             this.httpContextAccessor = httpContextAccessor;

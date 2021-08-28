@@ -1,8 +1,8 @@
-﻿using HostIsle.Mobile.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using HostIsle.Mobile.Models;
 using Xamarin.Forms;
 
 namespace HostIsle.Mobile.ViewModels
@@ -12,6 +12,9 @@ namespace HostIsle.Mobile.ViewModels
         private string text;
         private string description;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewItemViewModel"/> class.
+        /// </summary>
         public NewItemViewModel()
         {
             SaveCommand = new Command(OnSave, ValidateSave);

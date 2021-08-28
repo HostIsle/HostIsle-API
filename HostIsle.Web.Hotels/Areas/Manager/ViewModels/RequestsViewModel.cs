@@ -1,7 +1,7 @@
 ﻿namespace HostIsle.Web.Hotels.Areas.Manager.ViewModels
 {
-    using HostIsle.Data.Models.Hotels;
     using System.Collections.Generic;
+    using HostIsle.Data.Models.Hotels;
 
     public class RequestsViewModel
     {

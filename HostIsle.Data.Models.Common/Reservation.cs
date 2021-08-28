@@ -1,4 +1,4 @@
-﻿namespace HostIsle.Data.Models.Hotels
+﻿namespace HostIsle.Data.Models.Common
 {
     using System;
     using System.Collections.Generic;
@@ -7,47 +7,45 @@
 
     public class Reservation
     {
-        public Reservation()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Reservation"/> class.
+        /// </summary>
+        /// <param name="servicedById"></param>
+        /// <param name="guestId"></param>
+        /// <param name="description"></param>
+        public Reservation(string servicedById, string guestId, string description)
         {
             this.Id = Guid.NewGuid().ToString();
+            this.ReservedOn = DateTime.UtcNow;
 
-            this.Feedbacks = new HashSet<Feedback>();
+            this.ServicedById = servicedById;
+            this.GuestId = guestId;
+            this.Description = description;
+
+            this.Signals = new HashSet<Signal>();
         }
 
         public string Id { get; private set; }
 
-        [Required]
-        public DateTime StartDate { get; set; }
+        public DateTime ReservedOn { get; set; }
+
+        public string Description { get; set; }
 
         [Required]
-        public DateTime EndDate { get; set; }
+        public string ServicedById { get; set; }
 
-        [Required]
-        public int Adults { get; set; }
-
-        [Required]
-        public int Children { get; set; }
-
-        [Required]
-        public string RoomId { get; set; }
-
-        public virtual Room Room { get; set; }
-
-        [Required]
-        public string HotelId { get; set; }
-
-        public virtual Hotel Hotel { get; set; }
-
-        [Required]
-        public string ReceptionistId { get; set; }
-
-        public virtual ApplicationUser Receptionist { get; set; }
+        public virtual ApplicationUser ServicedBy { get; set; }
 
         [Required]
         public string GuestId { get; set; }
 
         public virtual ApplicationUser Guest { get; set; }
 
-        public virtual ICollection<Feedback> Feedbacks { get; set; }
+        [Required]
+        public string PropertyId { get; set; }
+
+        public virtual Property Property { get; set; }
+
+        public virtual ICollection<Signal> Signals { get; set; }
     }
 }

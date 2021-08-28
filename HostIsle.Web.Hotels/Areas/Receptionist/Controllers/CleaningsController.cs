@@ -20,12 +20,23 @@ using HostIsle.Web.ViewModels.Cleanings;
         private readonly IHotelService hotelService;
         private readonly ICleaningService cleaningService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CleaningsController"/> class.
+        /// </summary>
+        /// <param name="hotelService"></param>
+        /// <param name="cleaningService"></param>
         public CleaningsController(IHotelService hotelService, ICleaningService cleaningService)
         {
             this.hotelService = hotelService;
             this.cleaningService = cleaningService;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="returnedId"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> All(string id, string returnedId)
         {
@@ -36,6 +47,12 @@ using HostIsle.Web.ViewModels.Cleanings;
             return this.View("~/Views/Cleanings/All.cshtml");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="returnedId"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> Add(string id, string returnedId)
         {
@@ -46,6 +63,12 @@ using HostIsle.Web.ViewModels.Cleanings;
             return this.View("~/Views/Cleanings/Add.cshtml");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Create(CreateCleaningViewModel model, string id)
         {
@@ -54,6 +77,11 @@ using HostIsle.Web.ViewModels.Cleanings;
             return this.RedirectToAction("All", "Cleanings", new { returnedId = id });
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Assign(string id)
         {

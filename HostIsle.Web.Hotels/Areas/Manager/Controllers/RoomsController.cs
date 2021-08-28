@@ -14,12 +14,22 @@
         private readonly IHotelService hotelService;
         private readonly IRoomService roomService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RoomsController"/> class.
+        /// </summary>
+        /// <param name="hotelService"></param>
+        /// <param name="roomService"></param>
         public RoomsController(IHotelService hotelService, IRoomService roomService)
         {
             this.hotelService = hotelService;
             this.roomService = roomService;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> Add(string id)
         {
@@ -30,6 +40,12 @@
             return this.View();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Create(RoomRegisterViewModel model, string id)
         {

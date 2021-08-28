@@ -13,12 +13,22 @@ using HostIsle.Web.ViewModels.Events;
         private readonly IEventService eventService;
         private readonly IHotelService hotelService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventsController"/> class.
+        /// </summary>
+        /// <param name="eventService"></param>
+        /// <param name="hotelService"></param>
         public EventsController(IEventService eventService, IHotelService hotelService)
         {
             this.eventService = eventService;
             this.hotelService = hotelService;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> Add(string id)
         {
@@ -29,6 +39,12 @@ using HostIsle.Web.ViewModels.Events;
             return this.View("~/Views/Events/Add.cshtml");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="returnedId"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
         public async Task<IActionResult> All(string id, string returnedId)
         {
@@ -39,6 +55,12 @@ using HostIsle.Web.ViewModels.Events;
             return this.View("~/Views/Events/All.cshtml");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Create(CreateEventViewModel model, string id)
         {
@@ -47,6 +69,11 @@ using HostIsle.Web.ViewModels.Events;
             return this.RedirectToAction("All", "Events", new { returnedId = id });
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {

@@ -11,6 +11,10 @@
     {
         private readonly IRepository<Room> roomRepo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RoomService"/> class.
+        /// </summary>
+        /// <param name="roomRepo"></param>
         public RoomService(IRepository<Room> roomRepo)
         {
             this.roomRepo = roomRepo;

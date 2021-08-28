@@ -18,6 +18,10 @@ namespace HostIsle.Web.Hotels.Areas.Identity.Pages.Account
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResetPasswordModel"/> class.
+        /// </summary>
+        /// <param name="userManager"></param>
         public ResetPasswordModel(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
@@ -61,6 +65,10 @@ namespace HostIsle.Web.Hotels.Areas.Identity.Pages.Account
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

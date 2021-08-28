@@ -11,6 +11,12 @@
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddController"/> class.
+        /// </summary>
+        /// <param name="roleManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="userManager"></param>
         public AddController(RoleManager<ApplicationRole> roleManager, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
             this.roleManager = roleManager;
@@ -18,6 +24,10 @@
             this.userManager = userManager;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> Role()
         {
             var roles = new string[5] { "Administrator", "Manager", "Receptionist", "Cleaner", "Guest" };
@@ -33,6 +43,10 @@
             return this.Redirect("/");
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> Admin()
         {
             var user = new ApplicationUser()

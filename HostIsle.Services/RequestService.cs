@@ -15,6 +15,12 @@
         private readonly IRepository<Hotel> hotelRepo;
         private readonly IHttpContextAccessor httpContextAccessor;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RequestService"/> class.
+        /// </summary>
+        /// <param name="requestRepo"></param>
+        /// <param name="hotelRepo"></param>
+        /// <param name="httpContextAccessor"></param>
         public RequestService(IRepository<Request> requestRepo, IRepository<Hotel> hotelRepo, IHttpContextAccessor httpContextAccessor)
         {
             this.requestRepo = requestRepo;

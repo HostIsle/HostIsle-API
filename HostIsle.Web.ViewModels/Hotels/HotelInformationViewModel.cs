@@ -3,6 +3,9 @@
 // Copyright (c) HotelCollab. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
+using HostIsle.Data.Models.Common;
+
 namespace HostIsle.Web.ViewModels.Hotels
 {
     using System.Collections.Generic;
@@ -18,9 +21,9 @@ namespace HostIsle.Web.ViewModels.Hotels
         /// </summary>
         public Hotel Hotel { get; set; }
 
-        public List<UserHotelRole> Cleaners { get; set; }
+        // public List<UserHotelRole> Cleaners { get; set; }
 
-        public List<UserHotelRole> Receptionists { get; set; }
+        // public List<UserHotelRole> Receptionists { get; set; }
 
         public List<Cleaning> Cleanings { get; set; }
 

@@ -7,6 +7,9 @@ namespace HostIsle.Mobile.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AboutViewModel"/> class.
+        /// </summary>
         public AboutViewModel()
         {
             Title = "About";

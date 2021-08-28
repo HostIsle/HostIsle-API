@@ -1,8 +1,8 @@
-﻿using HostIsle.Mobile.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HostIsle.Mobile.Models;
 
 namespace HostIsle.Mobile.Services
 {
@@ -10,6 +10,9 @@ namespace HostIsle.Mobile.Services
     {
         readonly List<Item> items;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MockDataStore"/> class.
+        /// </summary>
         public MockDataStore()
         {
             items = new List<Item>()

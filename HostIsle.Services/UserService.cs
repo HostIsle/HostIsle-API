@@ -15,6 +15,11 @@
         private readonly IRepository<ApplicationUser> userRepo;
         private readonly IHttpContextAccessor httpContextAccessor;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserService"/> class.
+        /// </summary>
+        /// <param name="userRepo"></param>
+        /// <param name="httpContextAccessor"></param>
         public UserService(IRepository<ApplicationUser> userRepo, IHttpContextAccessor httpContextAccessor)
         {
             this.userRepo = userRepo;

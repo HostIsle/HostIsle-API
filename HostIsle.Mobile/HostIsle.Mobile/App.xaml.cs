@@ -1,6 +1,6 @@
-﻿using HostIsle.Mobile.Services;
+﻿using System;
+using HostIsle.Mobile.Services;
 using HostIsle.Mobile.Views;
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,6 +9,9 @@ namespace HostIsle.Mobile
     public partial class App : Application
     {
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="App"/> class.
+        /// </summary>
         public App()
         {
             InitializeComponent();

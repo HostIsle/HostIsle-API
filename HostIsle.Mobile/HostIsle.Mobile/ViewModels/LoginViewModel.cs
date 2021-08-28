@@ -1,7 +1,7 @@
-﻿using HostIsle.Mobile.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using HostIsle.Mobile.Views;
 using Xamarin.Forms;
 
 namespace HostIsle.Mobile.ViewModels
@@ -10,6 +10,9 @@ namespace HostIsle.Mobile.ViewModels
     {
         public Command LoginCommand { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoginViewModel"/> class.
+        /// </summary>
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);

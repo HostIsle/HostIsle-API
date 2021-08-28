@@ -1,35 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HostIsle.Data.Models.Restaurants
+﻿namespace HostIsle.Data.Models.Restaurants
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using HostIsle.Data.Models.Common;
+    using HostIsle.Data.Models.Restaurants.Enums;
+
     public class Order
     {
-       
-        public int Id { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Order"/> class.
+        /// </summary>
+        /// <param name="tableNumber"></param>
+        /// <param name="clientId"></param>
+        /// <param name="restaurantId"></param>
+        /// <param name="totalPrice"></param>
+        public Order(int tableNumber, string clientId, string restaurantId, decimal totalPrice)
+        {
+            this.Id = Guid.NewGuid().ToString();
+            this.OrderedOn = DateTime.UtcNow;
+            this.State = OrderState.Waiting;
 
+            this.TableNumber = tableNumber;
+            this.ClientId = clientId;
+            this.RestaurantId = restaurantId;
+            this.TotalPrice = totalPrice;
+
+            this.Products = new Dictionary<Product, int>();
+            this.ProductsState = new Dictionary<Product, ProductState>();
+        }
+
+        public string Id { get; set; }
+
+        [Required]
         public int TableNumber { get; set; }
 
-        public string UserId { get; set; }
-        public virtual User User { get; set; }
+        [Required]
+        public string ClientId { get; set; }
 
-        public int RestaurantId { get; set; }
+        public virtual ApplicationUser Client { get; set; }
+
+        [Required]
+        public string RestaurantId { get; set; }
+
         public virtual Restaurant Restaurant { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
         public decimal TotalPrice { get; set; }
 
         public DateTime OrderedOn { get; set; }
 
-        public bool IsItConfirmed { get; set; }
+        public OrderState State { get; set; }
 
-        public bool IsFinished { get; set; }
+        public virtual IDictionary<Product, int> Products { get; set; }
 
-        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
-
-
+        public virtual IDictionary<Product, ProductState> ProductsState { get; set; }
     }
 }
