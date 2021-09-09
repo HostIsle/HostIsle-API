@@ -12,12 +12,14 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Location"/> class.
         /// </summary>
+        /// <param name="name"></param>
         /// <param name="ownerId"></param>
         /// <param name="addressId"></param>
-        public Location(string ownerId, string addressId)
+        public Location(string name, string ownerId, string addressId)
         {
             this.Id = Guid.NewGuid().ToString();
 
+            this.Name = name;
             this.OwnerId = ownerId;
             this.AddressId = addressId;
 
@@ -25,6 +27,10 @@
         }
 
         public string Id { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string Name { get; set; }
 
         [Required]
         public string AddressId { get; set; }

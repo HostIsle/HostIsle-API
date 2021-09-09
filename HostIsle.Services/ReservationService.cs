@@ -2,6 +2,8 @@
 // Copyright (c) HotelCollab. All rights reserved.
 // </copyright>
 
+using HostIsle.Data.Models.Common;
+
 namespace HostIsle.Services
 {
     using System;
@@ -20,16 +22,14 @@ namespace HostIsle.Services
     /// </summary>
     public class ReservationService : IReservationService
     {
-        private readonly IRepository<Feedback> feedbackRepo;
+        private readonly IRepository<Signal> feedbackRepo;
         private readonly IRepository<Cleaning> cleaningRepo;
         private readonly IRepository<Hotel> hotelRepo;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IRepository<ApplicationUser> userRepo;
-        private readonly IRepository<UserHotelRole> userHotelRoleRepo;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IRepository<Reservation> reservationRepo;
+        private readonly IRepository<HotelReservation> reservationRepo;
         private readonly IRepository<Room> roomRepo;
-        private readonly IRepository<HotelRole> hotelRoleRepo;
 
         private string role;
         private string hotelId;
@@ -39,7 +39,7 @@ namespace HostIsle.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="ReservationService"/> class.
         /// </summary>
-        /// <param name="feedbackRepo"> Access the feedbacks table of the database. </param>
+        /// <param name="feedbackRepo"> Access the signals table of the database. </param>
         /// <param name="cleaningRepo"> Access the cleanings table of the database. </param>
         /// <param name="hotelRepo"> Access the hotels table of the database. </param>
         /// <param name="httpContextAccessor"> Access the current session information. </param>
@@ -49,18 +49,16 @@ namespace HostIsle.Services
         /// <param name="reservationRepo"> Access the reservations table of the database. </param>
         /// <param name="roomRepo"> Access the rooms table of the database. </param>
         /// <param name="hotelRoleRepo"> Access the hotelRoles table of the database. </param>
-        public ReservationService(IRepository<Feedback> feedbackRepo, IRepository<Cleaning> cleaningRepo, IRepository<Hotel> hotelRepo, IHttpContextAccessor httpContextAccessor, IRepository<ApplicationUser> userRepo, IRepository<UserHotelRole> userHotelRoleRepo, UserManager<ApplicationUser> userManager, IRepository<Reservation> reservationRepo, IRepository<Room> roomRepo, IRepository<HotelRole> hotelRoleRepo)
+        public ReservationService(IRepository<Signal> feedbackRepo, IRepository<Cleaning> cleaningRepo, IRepository<Hotel> hotelRepo, IHttpContextAccessor httpContextAccessor, IRepository<ApplicationUser> userRepo, UserManager<ApplicationUser> userManager, IRepository<HotelReservation> reservationRepo, IRepository<Room> roomRepo)
         {
             this.feedbackRepo = feedbackRepo;
             this.cleaningRepo = cleaningRepo;
             this.hotelRepo = hotelRepo;
             this.httpContextAccessor = httpContextAccessor;
             this.userRepo = userRepo;
-            this.userHotelRoleRepo = userHotelRoleRepo;
             this.userManager = userManager;
             this.reservationRepo = reservationRepo;
             this.roomRepo = roomRepo;
-            this.hotelRoleRepo = hotelRoleRepo;
         }
 
         /// <summary>
@@ -99,7 +97,7 @@ namespace HostIsle.Services
 
             await this.DeleteReservationAsync(reservation);
 
-            return reservation.HotelId + " " + this.role;
+            return reservation.PropertyId + " " + this.role;
         }
 
         /// <summary>
@@ -120,14 +118,14 @@ namespace HostIsle.Services
 
             await this.roomRepo.SaveChangesAsync();
 
-            var hotelId = reservation.HotelId;
+            var hotelId = reservation.PropertyId;
 
-            var hotelRole = (await this.hotelRoleRepo.GetAllAsync()).FirstOrDefault(hr => hr.Role.Name == "Guest");
+            //var hotelRole = (await this.hotelRoleRepo.GetAllAsync()).FirstOrDefault(hr => hr.Role.Name == "Guest");
 
-            var userHotelRole = (await this.userHotelRoleRepo.GetAllAsync()).FirstOrDefault(uhr => uhr.User.Id == reservation.Guest.Id && uhr.HotelRole == hotelRole);
+            //var userHotelRole = (await this.userHotelRoleRepo.GetAllAsync()).FirstOrDefault(uhr => uhr.User.Id == reservation.Guest.Id && uhr.HotelRole == hotelRole);
 
-            this.userHotelRoleRepo.Delete(userHotelRole);
-            await this.userHotelRoleRepo.SaveChangesAsync();
+            //this.userHotelRoleRepo.Delete(userHotelRole);
+            //await this.userHotelRoleRepo.SaveChangesAsync();
 
             return $"{hotelId} {role}";
         }
@@ -204,28 +202,13 @@ namespace HostIsle.Services
 
             var receptionistId = (await this.userRepo.GetAllAsync()).FirstOrDefault(user => user.UserName == receptionistName).Id;
 
-            var reservation = new Reservation()
-            {
-                GuestId = guest.Id,
-                StartDate = DateTime.Parse(this.addReservationViewModel.StartDate),
-                EndDate = DateTime.Parse(this.addReservationViewModel.EndDate),
-                Adults = this.addReservationViewModel.Adults,
-                Children = this.addReservationViewModel.Children,
-                RoomId = room.Id,
-                HotelId = this.hotelId,
-                ReceptionistId = receptionistId,
-            };
+            var reservation = new HotelReservation(receptionistId, guest.Id, string.Empty, DateTime.Parse(this.addReservationViewModel.StartDate), DateTime.Parse(this.addReservationViewModel.EndDate), this.addReservationViewModel.Adults, this.addReservationViewModel.Children, room.Id, this.hotelId);
 
             var hotel = await this.hotelRepo.GetAsync(this.hotelId);
 
             for (DateTime i = reservation.StartDate.AddDays(hotel.CleaningPeriod); i < reservation.EndDate; i = i.AddDays(hotel.CleaningPeriod))
             {
-                var cleaning = new Cleaning()
-                {
-                    RoomId = reservation.RoomId,
-                    Date = i,
-                    Status = CleaningStatus.Upcoming,
-                };
+                var cleaning = new Cleaning(i, CleaningStatus.Upcoming, reservation.RoomId, string.Empty);
 
                 await this.cleaningRepo.AddAsync(cleaning);
             }
@@ -238,17 +221,17 @@ namespace HostIsle.Services
 
         private async Task AddGuestToRoleAsync(ApplicationUser guest)
         {
-            var hotelRole = (await this.hotelRoleRepo.GetAllAsync())
-                .FirstOrDefault(hr => hr.HotelId == this.hotelId && hr.Role.Name == "Guest");
+            //var hotelRole = (await this.hotelRoleRepo.GetAllAsync())
+            //    .FirstOrDefault(hr => hr.HotelId == this.hotelId && hr.Role.Name == "Guest");
 
-            var userHotelRole = new UserHotelRole()
-            {
-                UserId = guest.Id,
-                HotelRoleId = hotelRole.Id,
-            };
+            //var userHotelRole = new UserHotelRole()
+            //{
+            //    UserId = guest.Id,
+            //    HotelRoleId = hotelRole.Id,
+            //};
 
-            await this.userHotelRoleRepo.AddAsync(userHotelRole);
-            await this.userHotelRoleRepo.SaveChangesAsync();
+            //await this.userHotelRoleRepo.AddAsync(userHotelRole);
+            //await this.userHotelRoleRepo.SaveChangesAsync();
         }
 
         private async Task<bool> IsTheGuestRegisteredBeforeAsync()
@@ -275,21 +258,21 @@ namespace HostIsle.Services
         private async Task<ApplicationUser> GetUserProfileAsync()
             => (await this.userRepo.GetAllAsync()).FirstOrDefault(u => u.Email == this.addReservationViewModel.Email);
 
-        private void DeleteSignalsOfReservation(Reservation reservation)
+        private void DeleteSignalsOfReservation(HotelReservation reservation)
         {
-            if (reservation.Feedbacks.Any())
+            if (reservation.Signals.Any())
             {
-                foreach (var signal in reservation.Feedbacks)
+                foreach (var signal in reservation.Signals)
                 {
                     this.feedbackRepo.Delete(signal);
                 }
             }
         }
 
-        private async Task<Reservation> GetReservationAsync()
+        private async Task<HotelReservation> GetReservationAsync()
             => await this.reservationRepo.GetAsync(this.reservationId);
 
-        private async Task DeleteReservationAsync(Reservation reservation)
+        private async Task DeleteReservationAsync(HotelReservation reservation)
         {
             this.reservationRepo.Delete(reservation);
 

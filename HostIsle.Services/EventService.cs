@@ -1,4 +1,6 @@
-﻿namespace HostIsle.Services
+﻿using HostIsle.Data.Models.Common;
+
+namespace HostIsle.Services
 {
     using System;
     using System.Threading.Tasks;
@@ -24,13 +26,7 @@
         {
             var date = DateTime.Parse($"{model.Date}T{model.Time}");
 
-            var @event = new Event()
-            {
-                Title = model.Title,
-                Date = date,
-                Description = model.Description,
-                HotelId = id.Split()[0],
-            };
+            var @event = new Event(model.Title, model.Description, date, id.Split()[0]);
 
             await this.eventRepo.AddAsync(@event);
             await this.eventRepo.SaveChangesAsync();
@@ -47,7 +43,7 @@
 
             await this.eventRepo.SaveChangesAsync();
 
-            return @event.HotelId + " " + role;
+            return @event.PropertyId + " " + role;
         }
     }
 }

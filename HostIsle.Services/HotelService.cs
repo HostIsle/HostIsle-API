@@ -1,4 +1,6 @@
-﻿namespace HostIsle.Services
+﻿using HostIsle.Data.Models.Common;
+
+namespace HostIsle.Services
 {
     using System;
     using System.Collections.Generic;
@@ -20,7 +22,6 @@
         private readonly IRepository<Cleaning> cleaningRepo;
         private readonly IRepository<ApplicationUser> userRepo;
         private readonly IRepository<Reservation> reservationRepo;
-        private readonly IRepository<UserHotelRole> userHotelRoleRepo;
         private readonly IRepository<Hotel> hotelRepo;
         private readonly IRepository<Town> townRepo;
         private readonly IRepository<ApplicationRole> roleRepo;
@@ -38,13 +39,12 @@
         /// <param name="townRepo"></param>
         /// <param name="roleRepo"></param>
         /// <param name="httpContextAccessor"></param>
-        public HotelService(IRepository<Room> roomRepo, IRepository<Cleaning> cleaningRepo, IRepository<ApplicationUser> userRepo, IRepository<Reservation> reservationRepo, IRepository<UserHotelRole> userHotelRoleRepo, IRepository<Hotel> hotelRepo, IRepository<Town> townRepo, IRepository<ApplicationRole> roleRepo, IHttpContextAccessor httpContextAccessor)
+        public HotelService(IRepository<Room> roomRepo, IRepository<Cleaning> cleaningRepo, IRepository<ApplicationUser> userRepo, IRepository<Reservation> reservationRepo, IRepository<Hotel> hotelRepo, IRepository<Town> townRepo, IRepository<ApplicationRole> roleRepo, IHttpContextAccessor httpContextAccessor)
         {
             this.roomRepo = roomRepo;
             this.cleaningRepo = cleaningRepo;
             this.userRepo = userRepo;
             this.reservationRepo = reservationRepo;
-            this.userHotelRoleRepo = userHotelRoleRepo;
             this.hotelRepo = hotelRepo;
             this.townRepo = townRepo;
             this.roleRepo = roleRepo;
@@ -91,10 +91,8 @@
 
             if (!towns.Any())
             {
-                town = new Town
-                {
-                    Name = model.TownName,
-                };
+                // TODO postal code
+                town = new Town(model.TownName, string.Empty);
 
                 await this.townRepo.AddAsync(town);
             }
@@ -103,37 +101,37 @@
                 town = towns.FirstOrDefault();
             }
 
-            var hotel = new Hotel()
-            {
-                Name = model.Name,
-                PhoneNumber = model.PhoneNumber,
-                Address = model.Address,
-                CleaningPeriod = model.CleaningPeriod,
-                TownId = town.Id,
-            };
-            town.Hotels.Add(hotel);
+            //var hotel = new Hotel(model.Name,)
+            //{
+            //    Name = model.Name,
+            //    PhoneNumber = model.PhoneNumber,
+            //    Address = model.Address,
+            //    CleaningPeriod = model.CleaningPeriod,
+            //    TownId = town.Id,
+            //};
+            //town.Hotels.Add(hotel);
 
-            foreach (var role in await this.roleRepo.GetAllAsync())
-            {
-                hotel.HotelRoles.Add(new HotelRole
-                {
-                    HotelId = hotel.Id,
-                    RoleId = (await this.roleRepo.GetAllAsync()).FirstOrDefault(r => r.Name == role.Name)?.Id,
-                });
-            }
+            //foreach (var role in await this.roleRepo.GetAllAsync())
+            //{
+            //    hotel.HotelRoles.Add(new HotelRole
+            //    {
+            //        HotelId = hotel.Id,
+            //        RoleId = (await this.roleRepo.GetAllAsync()).FirstOrDefault(r => r.Name == role.Name)?.Id,
+            //    });
+            //}
 
-            await this.townRepo.SaveChangesAsync();
-            await this.hotelRepo.SaveChangesAsync();
+            //await this.townRepo.SaveChangesAsync();
+            //await this.hotelRepo.SaveChangesAsync();
 
-            var currentUser = (await this.userRepo.GetAllAsync()).FirstOrDefault(user => user.UserName == this.httpContextAccessor.HttpContext.User.Identity.Name);
+            //var currentUser = (await this.userRepo.GetAllAsync()).FirstOrDefault(user => user.UserName == this.httpContextAccessor.HttpContext.User.Identity.Name);
 
-            await this.userHotelRoleRepo.AddAsync(new UserHotelRole
-            {
-                UserId = currentUser.Id,
-                HotelRoleId = hotel.HotelRoles.FirstOrDefault(hr => hr.Role.Name == "Manager").Id,
-            });
+            //await this.userHotelRoleRepo.AddAsync(new UserHotelRole
+            //{
+            //    UserId = currentUser.Id,
+            //    HotelRoleId = hotel.HotelRoles.FirstOrDefault(hr => hr.Role.Name == "Manager").Id,
+            //});
 
-            await this.userHotelRoleRepo.SaveChangesAsync();
+            //await this.userHotelRoleRepo.SaveChangesAsync();
         }
 
         public async Task<List<Hotel>> GetAllAsync() => await this.hotelRepo.GetAllAsync();
@@ -165,47 +163,45 @@
                 employeeRole = hotelInfo[3];
             }
 
-            if (role == "Guest")
-            {
-                user = (await this.userRepo.GetAllAsync()).FirstOrDefault(u => u.Id == this.httpContextAccessor.HttpContext.User.FindFirst("Id").Value);
-                reservation = (await this.reservationRepo.GetAllAsync()).FirstOrDefault(r =>
-                r.Guest.Id == user.Id &&
-                r.EndDate.AddDays(1) > DateTime.Now);
-            }
+            //if (role == "Guest")
+            //{
+            //    user = (await this.userRepo.GetAllAsync()).FirstOrDefault(u => u.Id == this.httpContextAccessor.HttpContext.User.FindFirst("Id").Value);
+            //    reservation = (await this.reservationRepo.GetAllAsync()).FirstOrDefault(r =>
+            //    r.Guest.Id == user.Id &&
+            //    r.EndDate.AddDays(1) > DateTime.Now);
+            //}
 
-            currentUser = (await this.userRepo.GetAllAsync()).FirstOrDefault(user => user.UserName == this.httpContextAccessor.HttpContext.User.Identity.Name);
+            //currentUser = (await this.userRepo.GetAllAsync()).FirstOrDefault(user => user.UserName == this.httpContextAccessor.HttpContext.User.Identity.Name);
 
-            var hotel = await this.hotelRepo.GetAsync(hotelId);
+            //var hotel = await this.hotelRepo.GetAsync(hotelId);
 
-            var floors = (await this.roomRepo.GetAllAsync()).Where(r => r.HotelId == hotelId).Select(r => r.Floor).ToHashSet();
+            //var floors = (await this.roomRepo.GetAllAsync()).Where(r => r.HotelId == hotelId).Select(r => r.Floor).ToHashSet();
 
-            var cleanings = (await this.cleaningRepo.GetAllAsync()).Where(c => c.Room.HotelId == hotelId).ToList();
+            //var cleanings = (await this.cleaningRepo.GetAllAsync()).Where(c => c.Room.HotelId == hotelId).ToList();
 
-            var cleaners = (await this.userHotelRoleRepo.GetAllAsync()).Where(uh => uh.HotelRole.HotelId == hotelId && uh.HotelRole.Role.Name == "Cleaner").ToList();
+            //var cleaners = (await this.userHotelRoleRepo.GetAllAsync()).Where(uh => uh.HotelRole.HotelId == hotelId && uh.HotelRole.Role.Name == "Cleaner").ToList();
 
-            var receptionists = (await this.userHotelRoleRepo.GetAllAsync()).Where(uh => uh.HotelRole.HotelId == hotelId && uh.HotelRole.Role.Name == "Receptionist").ToList();
+            //var receptionists = (await this.userHotelRoleRepo.GetAllAsync()).Where(uh => uh.HotelRole.HotelId == hotelId && uh.HotelRole.Role.Name == "Receptionist").ToList();
 
-            var isManager = (await this.userHotelRoleRepo.GetAllAsync())
-                .Where(uhr => uhr.User.Id == currentUser.Id && uhr.HotelRole.HotelId == hotelId)
-                .Any(uhr => uhr.User.UserHotelRoles.Any(u => u.HotelRole.Role.Name == "Manager"));
+            //var isManager = (await this.userHotelRoleRepo.GetAllAsync())
+            //    .Where(uhr => uhr.User.Id == currentUser.Id && uhr.HotelRole.HotelId == hotelId)
+            //    .Any(uhr => uhr.User.UserHotelRoles.Any(u => u.HotelRole.Role.Name == "Manager"));
 
-            var model = new HotelInformationViewModel()
-            {
-                Hotel = hotel,
-                Cleaners = cleaners,
-                Receptionists = receptionists,
-                IsManager = isManager,
-                Role = role,
-                EmployeeRole = employeeRole,
-                Reservation = reservation,
-                User = user,
-                Cleanings = cleanings,
-                Floors = floors,
-                UserId = currentUser.Id,
-                CurrentUser = currentUser,
-            };
+            //var model = new HotelInformationViewModel()
+            //{
+            //    Hotel = hotel,
+            //    IsManager = isManager,
+            //    Role = role,
+            //    EmployeeRole = employeeRole,
+            //    Reservation = reservation,
+            //    User = user,
+            //    Cleanings = cleanings,
+            //    Floors = floors,
+            //    UserId = currentUser?.Id ?? string.Empty,
+            //    CurrentUser = currentUser,
+            //};
 
-            return model;
+            return null;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace HostIsle.Services
+﻿using HostIsle.Data.Models.Common;
+
+namespace HostIsle.Services
 {
     using System.IO;
     using System.Threading.Tasks;

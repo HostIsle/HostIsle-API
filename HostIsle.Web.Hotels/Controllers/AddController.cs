@@ -1,4 +1,7 @@
-﻿namespace HostIsle.Web.Hotels.Controllers
+﻿using System.Security.Claims;
+using HostIsle.Data.Models.Common;
+
+namespace HostIsle.Web.Hotels.Controllers
 {
     using System.Threading.Tasks;
     using HostIsle.Data.Models.Hotels;
@@ -30,6 +33,7 @@
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public async Task<IActionResult> Role()
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var roles = new string[5] { "Administrator", "Manager", "Receptionist", "Cleaner", "Guest" };
 
             foreach (var role in roles)

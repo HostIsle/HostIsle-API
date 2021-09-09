@@ -1,3 +1,5 @@
+using HostIsle.Data.Models.Common;
+
 namespace HostIsle.Web.Hotels
 {
     using System;
@@ -14,7 +16,7 @@ namespace HostIsle.Web.Hotels
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpsPolicy;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI;
+    //using Microsoft.AspNetCore.Identity.UI;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -40,11 +42,11 @@ namespace HostIsle.Web.Hotels
                 options.UseSqlServer(
                     this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDatabaseDeveloperPageExceptionFilter();
+            //services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddRoles<ApplicationRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<IRepository<ApplicationRole>, Repository<ApplicationRole>>();
             services.AddTransient<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
@@ -52,14 +54,11 @@ namespace HostIsle.Web.Hotels
             services.AddTransient<IRepository<Cleaning>, Repository<Cleaning>>();
             services.AddTransient<IRepository<Damage>, Repository<Damage>>();
             services.AddTransient<IRepository<Event>, Repository<Event>>();
-            services.AddTransient<IRepository<Feedback>, Repository<Feedback>>();
+            services.AddTransient<IRepository<Signal>, Repository<Signal>>();
             services.AddTransient<IRepository<Hotel>, Repository<Hotel>>();
-            services.AddTransient<IRepository<Request>, Repository<Request>>();
             services.AddTransient<IRepository<Reservation>, Repository<Reservation>>();
             services.AddTransient<IRepository<Room>, Repository<Room>>();
             services.AddTransient<IRepository<Town>, Repository<Town>>();
-            services.AddTransient<IRepository<HotelRole>, Repository<HotelRole>>();
-            services.AddTransient<IRepository<UserHotelRole>, Repository<UserHotelRole>>();
 
             services.AddScoped<IHotelService, HotelService>();
             services.AddScoped<Areas.Manager.Services.Interfaces.IRequestService, Areas.Mananger.Services.RequestService>();
@@ -84,7 +83,6 @@ namespace HostIsle.Web.Hotels
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseMigrationsEndPoint();
             }
             else
             {

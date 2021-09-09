@@ -1,6 +1,6 @@
 ﻿using System;
 using HostIsle.Data;
-using HostIsle.Data.Models.Hotels;
+using HostIsle.Data.Models.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;

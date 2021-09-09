@@ -24,13 +24,7 @@
         {
             var hotelId = id.Split()[0];
 
-            var room = new Room()
-            {
-                RoomNumber = model.RoomNumber,
-                Floor = model.Floor,
-                RoomType = model.Type,
-                HotelId = hotelId,
-            };
+            var room = new Room(model.RoomNumber, string.Empty, hotelId, model.Floor, model.Type, false, true);
 
             await this.roomRepo.AddAsync(room);
             await this.roomRepo.SaveChangesAsync();

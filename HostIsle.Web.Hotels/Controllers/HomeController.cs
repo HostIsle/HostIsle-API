@@ -2,6 +2,9 @@
 // Copyright (c) HotelCollab. All rights reserved.
 // </copyright>
 
+using HostIsle.Data.Models.Common;
+using Microsoft.AspNetCore.Authorization;
+
 namespace HostIsle.Web.Hotels.Controllers
 {
     using System.Linq;
@@ -42,14 +45,14 @@ namespace HostIsle.Web.Hotels.Controllers
 
                 list.Hotels = await this.hotelRepo.GetAllAsync();
 
-                foreach (var item in currentUser.UserHotelRoles)
-                {
-                    list.RenderedHotels.Add(new HotelRenderViewModel
-                    {
-                        Hotel = item.HotelRole.Hotel,
-                        Role = item.HotelRole.Role.Name,
-                    });
-                }
+                //foreach (var item in currentUser.UserHotelRoles)
+                //{
+                //    list.RenderedHotels.Add(new HotelRenderViewModel
+                //    {
+                //        Hotel = item.HotelRole.Hotel,
+                //        Role = item.HotelRole.Role.Name,
+                //    });
+                //}
 
                 this.ViewBag.UserHotels = list.RenderedHotels;
                 this.ViewBag.Hotels = list.Hotels;

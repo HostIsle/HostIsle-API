@@ -17,8 +17,8 @@
         /// <param name="locationId"></param>
         /// <param name="seats"></param>
         /// <param name="workTime"></param>
-        public Restaurant(string name, string phoneNumber, PropertyType type, List<string> gallery, string locationId, int seats, string workTime)
-            : base(name, phoneNumber, type, gallery, locationId)
+        public Restaurant(string phoneNumber, PropertyType type, List<string> gallery, string locationId, int seats, string workTime)
+            : base(phoneNumber, type, gallery, locationId)
         {
             this.Seats = seats;
             this.WorkTime = workTime;

@@ -5,6 +5,6 @@
 
     public class RequestsViewModel
     {
-        public List<Request> Requests { get; set; }
+        //public List<Request> Requests { get; set; }
     }
 }
