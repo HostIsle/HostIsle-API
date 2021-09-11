@@ -20,6 +20,7 @@
 
             this.Signals = new HashSet<Signal>();
             this.Reservations = new HashSet<Reservation>();
+            this.ProceededReservations = new HashSet<Reservation>();
             this.ProcessedSignals = new HashSet<Signal>();
             this.UserRoles = new HashSet<ApplicationUserRole>();
             this.Locations = new HashSet<Location>();
@@ -48,6 +49,9 @@
         public virtual ICollection<Signal> Signals { get; set; }
 
         public virtual ICollection<Reservation> Reservations { get; set; }
+
+
+        public virtual ICollection<Reservation> ProceededReservations { get; set; }
 
         public virtual ICollection<Location> Locations { get; set; }
 

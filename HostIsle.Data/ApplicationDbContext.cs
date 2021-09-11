@@ -226,7 +226,7 @@
 
             builder.Entity<Reservation>()
                 .HasOne(r => r.ServicedBy)
-                .WithMany(s => s.Reservations)
+                .WithMany(s => s.ProceededReservations)
                 .HasForeignKey(r => r.ServicedById);
 
             builder.Entity<Reservation>()

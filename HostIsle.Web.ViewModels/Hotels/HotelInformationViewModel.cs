@@ -19,7 +19,7 @@ namespace HostIsle.Web.ViewModels.Hotels
         /// <summary>
         /// Gets or sets the current hotel.
         /// </summary>
-        public Hotel Hotel { get; set; }
+        public Data.Models.Common.Property Property { get; set; }
 
         // public List<UserHotelRole> Cleaners { get; set; }
 
@@ -37,7 +37,7 @@ namespace HostIsle.Web.ViewModels.Hotels
 
         public string EmployeeRole { get; set; }
 
-        public Reservation Reservation { get; set; }
+        public HotelReservation Reservation { get; set; }
 
         public ApplicationUser User { get; set; }
 

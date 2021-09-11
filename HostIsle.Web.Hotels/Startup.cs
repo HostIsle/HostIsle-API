@@ -42,35 +42,34 @@ namespace HostIsle.Web.Hotels
                 options.UseSqlServer(
                     this.Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddDatabaseDeveloperPageExceptionFilter();
 
-            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddRoles<ApplicationRole>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddTransient<IRepository<ApplicationRole>, Repository<ApplicationRole>>();
-            services.AddTransient<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
-            services.AddTransient<IRepository<ApplicationUserRole>, Repository<ApplicationUserRole>>();
-            services.AddTransient<IRepository<Cleaning>, Repository<Cleaning>>();
-            services.AddTransient<IRepository<Damage>, Repository<Damage>>();
-            services.AddTransient<IRepository<Event>, Repository<Event>>();
-            services.AddTransient<IRepository<Signal>, Repository<Signal>>();
-            services.AddTransient<IRepository<Hotel>, Repository<Hotel>>();
-            services.AddTransient<IRepository<Reservation>, Repository<Reservation>>();
-            services.AddTransient<IRepository<Room>, Repository<Room>>();
-            services.AddTransient<IRepository<Town>, Repository<Town>>();
+            //services.AddTransient<IRepository<ApplicationRole>, Repository<ApplicationRole>>();
+            //services.AddTransient<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
+            //services.AddTransient<IRepository<ApplicationUserRole>, Repository<ApplicationUserRole>>();
+            //services.AddTransient<IRepository<Cleaning>, Repository<Cleaning>>();
+            //services.AddTransient<IRepository<Damage>, Repository<Damage>>();
+            //services.AddTransient<IRepository<Event>, Repository<Event>>();
+            //services.AddTransient<IRepository<Signal>, Repository<Signal>>();
+            //services.AddTransient<IRepository<Hotel>, Repository<Hotel>>();
+            //services.AddTransient<IRepository<Reservation>, Repository<Reservation>>();
+            //services.AddTransient<IRepository<Room>, Repository<Room>>();
+            //services.AddTransient<IRepository<Town>, Repository<Town>>();
 
-            services.AddScoped<IHotelService, HotelService>();
-            services.AddScoped<Areas.Manager.Services.Interfaces.IRequestService, Areas.Mananger.Services.RequestService>();
-            services.AddScoped<Services.Interfaces.IRequestService, Services.RequestService>();
-            services.AddScoped<IRoomService, RoomService>();
-            services.AddScoped<IReservationService, ReservationService>();
-            services.AddScoped<IEventService, EventService>();
-            services.AddScoped<Services.Interfaces.ISignalService, Services.SignalService>();
-            services.AddScoped<Areas.Guest.Services.Interfaces.ISignalService, Areas.Guest.Services.SignalService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<Areas.Guest.Services.Interfaces.ICleaningService, Areas.Guest.Services.CleaningService>();
-            services.AddScoped<Services.Interfaces.ICleaningService, Services.CleaningService>();
+            //services.AddScoped<IHotelService, HotelService>();
+            //services.AddScoped<Areas.Manager.Services.Interfaces.IRequestService, Areas.Mananger.Services.RequestService>();
+            //services.AddScoped<Services.Interfaces.IRequestService, Services.RequestService>();
+            //services.AddScoped<IRoomService, RoomService>();
+            //services.AddScoped<IReservationService, ReservationService>();
+            //services.AddScoped<IEventService, EventService>();
+            //services.AddScoped<Services.Interfaces.ISignalService, Services.SignalService>();
+            //services.AddScoped<Areas.Guest.Services.Interfaces.ISignalService, Areas.Guest.Services.SignalService>();
+            //services.AddScoped<IUserService, UserService>();
+            //services.AddScoped<Areas.Guest.Services.Interfaces.ICleaningService, Areas.Guest.Services.CleaningService>();
+            //services.AddScoped<Services.Interfaces.ICleaningService, Services.CleaningService>();
 
             services.AddControllersWithViews();
 
