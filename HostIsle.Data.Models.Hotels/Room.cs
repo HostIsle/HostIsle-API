@@ -27,6 +27,7 @@
             this.RoomType = roomType;
             this.IsBusy = isBusy;
             this.IsCleaned = isCleaned;
+            this.Description = description;
             this.Reservations = new HashSet<HotelReservation>();
             this.Cleanings = new HashSet<Cleaning>();
         }
@@ -38,6 +39,8 @@
 
         [Required]
         public string HotelId { get; set; }
+
+        public string Description { get; set; }
 
         public virtual Hotel Hotel { get; set; }
 

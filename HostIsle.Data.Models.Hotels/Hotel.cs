@@ -12,11 +12,11 @@
         /// </summary>
         /// <param name="name"></param>
         /// <param name="phoneNumber"></param>
-        /// <param name="type"></param>
+        /// <param name="typeId"></param>
         /// <param name="gallery"></param>
         /// <param name="locationId"></param>
-        public Hotel(string phoneNumber, PropertyType type, List<string> gallery, string locationId)
-            : base(phoneNumber, type, gallery, locationId)
+        public Hotel(string phoneNumber, string typeId, string gallery, string locationId)
+            : base(phoneNumber, typeId, gallery, locationId)
         {
             this.Rooms = new HashSet<Room>();
         }

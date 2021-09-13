@@ -12,13 +12,13 @@
         /// </summary>
         /// <param name="name"></param>
         /// <param name="phoneNumber"></param>
-        /// <param name="type"></param>
+        /// <param name="typeId"></param>
         /// <param name="gallery"></param>
         /// <param name="locationId"></param>
         /// <param name="seats"></param>
         /// <param name="workTime"></param>
-        public Restaurant(string phoneNumber, PropertyType type, List<string> gallery, string locationId, int seats, string workTime)
-            : base(phoneNumber, type, gallery, locationId)
+        public Restaurant(string phoneNumber, string typeId, string gallery, string locationId, int seats, string workTime)
+            : base(phoneNumber, typeId, gallery, locationId)
         {
             this.Seats = seats;
             this.WorkTime = workTime;

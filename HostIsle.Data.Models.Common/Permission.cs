@@ -12,12 +12,12 @@
 
         public string RoleId { get; set; }
 
-        public ApplicationRole Role { get; set; }
+        public virtual ApplicationRole Role { get; set; }
 
         public string Action { get; set; }
 
         public string PropertyId { get; set; }
 
-        public Property Property { get; set; }
+        public virtual Property Property { get; set; }
     }
 }

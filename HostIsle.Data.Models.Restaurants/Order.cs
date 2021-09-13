@@ -54,8 +54,10 @@
 
         public OrderState State { get; set; }
 
+        [NotMapped]
         public virtual IDictionary<Product, int> Products { get; set; }
 
+        [NotMapped]
         public virtual IDictionary<Product, ProductState> ProductsState { get; set; }
     }
 }

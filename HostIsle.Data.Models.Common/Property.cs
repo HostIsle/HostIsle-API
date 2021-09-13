@@ -13,19 +13,18 @@ namespace HostIsle.Data.Models.Common
         /// Initializes a new instance of the <see cref="Property"/> class.
         /// </summary>
         /// <param name="phoneNumber"></param>
-        /// <param name="type"></param>
+        /// <param name="typeId"></param>
         /// <param name="gallery"></param>
         /// <param name="locationId"></param>
-        public Property(string phoneNumber, PropertyType type, List<string> gallery, string locationId)
+        public Property(string phoneNumber, string typeId, string gallery, string locationId)
         {
             this.Id = Guid.NewGuid().ToString();
 
             this.PhoneNumber = phoneNumber;
-            this.Type = type;
+            this.TypeId = typeId;
             this.Gallery = gallery;
             this.LocationId = locationId;
 
-            this.Gallery = new List<string>();
             this.Reservations = new HashSet<Reservation>();
             this.Events = new HashSet<Event>();
             this.Roles = new HashSet<ApplicationRole>();
@@ -46,9 +45,9 @@ namespace HostIsle.Data.Models.Common
         [Required]
         public string TypeId { get; set; }
 
-        public PropertyType Type { get; set; }
+        public virtual PropertyType Type { get; set; }
 
-        public List<string> Gallery { get; set; }
+        public string Gallery { get; set; }
 
         [Required]
         public string LocationId { get; set; }
