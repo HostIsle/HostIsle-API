@@ -134,7 +134,7 @@
         {
             base.OnModelCreating(builder);
 
-            var entityTypes = builder.Model.GetEntityTypes() .ToList();
+            var entityTypes = builder.Model.GetEntityTypes().ToList();
 
             builder.Entity<Address>()
                 .HasOne(a => a.Town)
