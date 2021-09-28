@@ -18,4 +18,8 @@
     <ProjectReference Include="..\HostIsle.Web.ViewModels\HostIsle.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
 </Project>
